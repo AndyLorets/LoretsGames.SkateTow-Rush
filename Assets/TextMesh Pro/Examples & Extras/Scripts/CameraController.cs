@@ -205,7 +205,7 @@ namespace TMPro.Examples
                     {
                         if (hit.transform == CameraTarget)
                         {
-                            // Save Follow Position
+                            // NextLevel Follow Position
                             OrbitalAngle = 0;
                         }
                         else
