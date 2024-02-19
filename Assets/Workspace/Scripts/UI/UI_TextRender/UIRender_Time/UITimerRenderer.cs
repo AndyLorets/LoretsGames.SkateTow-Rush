@@ -1,11 +1,8 @@
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
-[RequireComponent(typeof(UIMoveTween))]
-public class UITextTimerRenderer : UITextRendererBase
+public class UITimerRenderer : UIRendererBase
 {
     [SerializeField] private Color _onChangeRedColor = Color.red;
-    [SerializeField] private Color _onChangeBlueColor = Color.green;
     private Color _startColor = Color.white;
 
     private UIMoveTween _uiMoveTween; 
@@ -17,40 +14,55 @@ public class UITextTimerRenderer : UITextRendererBase
     protected override void Regist()
     {
         if (!_isStatic)
-            UITextTimerRenderController.RegistAddedUIRender(this);
+            UITimerRenderController.RegistAddedUIRender(this);
         else
-            UITextTimerRenderController.RegistStaticUIRender(this);
+            UITimerRenderController.RegistStaticUIRender(this);
     }
     protected override void Awake()
     {
-        base.Awake();   
+        base.Awake();
 
-        _uiMoveTween = GetComponent<UIMoveTween>();   
+        _uiMoveTween = GetComponent<UIMoveTween>();
         _startColor = _text.color;
 
-        GameManager.onGameStarted += Show;
-        GameManager.onFinish += Hide;
-        GameManager.onLose += Hide;
+        if (_isStatic)
+        {
+            GameManager.onGameStarted += Show;
+            GameManager.onFinish += Hide;
+            GameManager.onLose += Hide;
+        }
+        else _text.enabled = false; 
     }
     private void OnDestroy()
     {
-        GameManager.onGameStarted -= Show;
-        GameManager.onFinish -= Hide;
-        GameManager.onLose -= Hide;
+        if (_isStatic)
+        {
+            GameManager.onGameStarted -= Show;
+            GameManager.onFinish -= Hide;
+            GameManager.onLose -= Hide;
+        }
     }
     private void Hide() => _uiMoveTween.Hide();
     private void Show() => _uiMoveTween.Show();
     public override void RenderTxt(string text, Vector3 startPos = default)
     {
-        if(!_isStatic) return;  
+        if (_isStatic)
+        {
+            base.RenderTxt(text, startPos);
+            AnimateScale();
+            if (TimerManager.gameDeadLineTime <= 5)
+                AnimateColor(_onChangeRedColor);
+            return;
+        }
+        _text.enabled = true;   
+        _text.text = text;
 
         base.RenderTxt(text, startPos);
-        int timer = TimerManager.gameTimer;
-
-        AnimateScale();
-
-        if (timer <= 5)
-            AnimateColor(_onChangeRedColor);
+    }
+    protected override void DeactiveAdded()
+    {
+        base.DeactiveAdded();
+        _text.enabled = false;
     }
     private void AnimateScale()
     {

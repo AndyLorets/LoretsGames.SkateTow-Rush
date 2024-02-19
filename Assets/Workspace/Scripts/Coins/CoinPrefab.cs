@@ -47,7 +47,7 @@ public class CoinPrefab : MonoBehaviour
         if (!other.CompareTag(ObjTags.player_tag)) return;
 
         _collider.enabled = false;
-        CoinsManager.AddCoins(1, transform.position);
+        MoneyManager.Add(1, transform.position);
         MoveToPlayer();
     }
 }

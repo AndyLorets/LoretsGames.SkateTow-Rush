@@ -8,25 +8,26 @@ public static class GameDataManager
 
     private const string SAVE_KEY = "SavesJSON";
     public const int LEVELS_COUNT = 15; 
-
+        
     private static SaveDataContainer _saveDataContainer = new SaveDataContainer();
+
     private class SaveDataContainer
     {
         public int currentLevel;
-        public int coinsCount;
+        public int moneyCount;
         public int keysCount;
         public int hookMoveSpeedMax;
-        public List<int> bestLevelDistance = new List<int>();
+        public List<float> bestLevelTime;
     }
     public static int CurrentLevel
     {
         get => _saveDataContainer.currentLevel;
         set => _saveDataContainer.currentLevel = value;
     }
-    public static int CoinsCount
+    public static int MoneyCount
     {
-        get => _saveDataContainer.coinsCount;
-        set => _saveDataContainer.coinsCount = value;
+        get => _saveDataContainer.moneyCount;
+        set => _saveDataContainer.moneyCount = value;
     }
     public static int KeysCount
     {
@@ -38,13 +39,13 @@ public static class GameDataManager
         get => _saveDataContainer.hookMoveSpeedMax;
         set => _saveDataContainer.hookMoveSpeedMax = value;
     }
-    public static List<int> BestLevelDistance
+    public static List<float> BestLevelTime
     {
-        get => _saveDataContainer.bestLevelDistance;
-        set => _saveDataContainer.bestLevelDistance = value; 
+        get => _saveDataContainer.bestLevelTime;
+        set => _saveDataContainer.bestLevelTime = value; 
     } 
 
-    static GameDataManager()
+    static  GameDataManager()
     {
 #if UNITY_EDITOR
         string saveFolder = Path.Combine("Workspace", "Saves");
@@ -110,9 +111,10 @@ public static class GameDataManager
 
     private static void FirstSave()
     {
+        _saveDataContainer.bestLevelTime = new List<float>(); 
         for (int i = 0; i < LEVELS_COUNT; i++)
         {
-            _saveDataContainer.bestLevelDistance.Add(0);
+            _saveDataContainer.bestLevelTime.Add(0);
         }
 
         Save();

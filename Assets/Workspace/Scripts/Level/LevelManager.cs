@@ -9,6 +9,8 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
+        ServiceLocator.RegisterService(this); 
+
         GameManager.onNextLevel += NextLevel;
         GameManager.onSaveAll += Save;
         GameManager.onRestart += OnRestart; 
@@ -17,6 +19,7 @@ public class LevelManager : MonoBehaviour
     {
         Construt();
     }
+    public Level ActiveLevel => _levels[_currentLevel]; 
     private void Construt()
     {
         _levels = new Level[_levelsParent.childCount];

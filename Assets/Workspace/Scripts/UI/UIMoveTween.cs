@@ -163,11 +163,11 @@ public class UIMoveTween : MonoBehaviour
     private RectTransform CreatePoint(string name)
     {
         Transform target = new GameObject(name, typeof(RectTransform)).transform;
-        target.parent = transform.parent;
+        target.SetParent(transform.parent, false);
 
         RectTransform copy = target as RectTransform;
 
-        copy.parent = transform.parent;
+        copy.SetParent(transform.parent, false);
         copy.anchorMin = _rectTransform.anchorMin;
         copy.anchorMax = _rectTransform.anchorMax;
         copy.anchoredPosition = _rectTransform.anchoredPosition;

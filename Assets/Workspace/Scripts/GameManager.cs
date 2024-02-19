@@ -22,9 +22,13 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        SetDebbugState();
+
+        if(FindObjectOfType(typeof(SceneLoader)) == null)
+            Debug.LogWarning("Missing <color=green>SceneLoader</color> component! Try running the game from the <color=black>Load_Scene</color>.");
+
         ServiceLocator.RegisterService(this);
         GameDataManager.Load();
-        SetDebbugState(); 
     }
     private void Start()
     {
@@ -58,13 +62,12 @@ public class GameManager : MonoBehaviour
     private void InitializeAll()
     {
         // Init statics class
-        DistanceMaanger.Init();
-        CoinsManager.Init();
+        MoneyManager.Init();
         KeyManager.Init();
-        UITextCoinsRenderController.Init();
-        UITextTimerRenderController.Init();
-        UITextKeyRenderController.Init();
         TimerManager.Init();
+        UIMoneyRenderController.Init();
+        UIKeyRenderController.Init();
+        UITimerRenderController.Init();
 
         if (DEBBUG_LOG)
             Debug.Log("Initialize All");
@@ -127,13 +130,13 @@ public class GameManager : MonoBehaviour
         isGameStart = false;
 
         // ResetAll statics class
-        DistanceMaanger.Reset();
-        CoinsManager.Reset();    
+        MoneyManager.Reset();    
         KeyManager.Reset();
-        UITextCoinsRenderController.Reset();
-        UITextTimerRenderController.Reset();
-        UITextKeyRenderController.Reset();
         TimerManager.Reset();
+        UIMoneyRenderController.Reset();
+        UIKeyRenderController.Reset();
+        UITimerRenderController.Reset();
+
         if (DEBBUG_LOG)
             Debug.Log("Reset All"); 
     }

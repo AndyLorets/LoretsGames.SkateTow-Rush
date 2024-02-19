@@ -5,11 +5,11 @@ public class Level : MonoBehaviour
 {
     [SerializeField, Min(5)] private int _startLevelTime = 15;
     [SerializeField, Min(5)] private int _addLevelTime = 5;
+    [field: SerializeField] public LevelTimeInfo LevelTimeInfo { get; private set; }
     [Space(7)]
-    [SerializeField] private Transform _levelContaniersParent; 
+    [SerializeField] private Transform _levelContaniersParent;
     [SerializeField] private float _contanierOffset = 216.5f;
-    [Space(7)]
-    [SerializeField] private LevelContanierInfo[] _levelContaniers;
+    [SerializeField] private LevelContanierInfo[] _levelContaniersInfo;
 
     private List<LevelContanier> _levelContanierList = new List<LevelContanier>();
 
@@ -20,8 +20,11 @@ public class Level : MonoBehaviour
 
     private void Start()
     {
-        TimerManager.AddTime(_startLevelTime);
+        TimerManager.Init(_startLevelTime);
         ConstructLevelContaniers();
+
+        if (_levelContaniersInfo.Length % 2 == 0 && GameManager.DEBBUG_WARNINGLOG)
+            Debug.LogWarning("The length of <color=yellow>LevelContanierInfo</color> should be odd!");
     }
 
     private void ConstructLevelContaniers()
@@ -29,9 +32,9 @@ public class Level : MonoBehaviour
         for (int i = 0; i < _levelContaniersParent.childCount; i++)
             _levelContaniersParent.GetChild(i).gameObject.SetActive(false);
 
-        for (int i = 0; i < _levelContaniers.Length; i++)
+        for (int i = 0; i < _levelContaniersInfo.Length; i++)
         {
-            GameObject levelContanierObj = Instantiate(_levelContaniers[i].Contanier, _levelContaniersParent).gameObject;
+            GameObject levelContanierObj = Instantiate(_levelContaniersInfo[i].Contanier, _levelContaniersParent).gameObject;
             levelContanierObj.transform.localPosition = Vector3.zero;
             levelContanierObj.transform.name = $"Level Contanier {i + 1}"; 
 
@@ -43,10 +46,11 @@ public class Level : MonoBehaviour
             }
 
             LevelContanier levelContanier = levelContanierObj.GetComponent<LevelContanier>();
-            levelContanier.isFinishContanier = i == _levelContaniers.Length - 1 ? true : false;
+            bool notHaveCheckPoint = i % Interval_ÑheckPointCallCount == 0; 
+            levelContanier.isFinishContanier = i == _levelContaniersInfo.Length - 1 ? true : false;
             levelContanier.onLevelEnter += CheckPoint;
-            levelContanier.SetActiveInteractiveObjects(_levelContaniers[i].HasJumper, _levelContaniers[i].HasBooster,
-                _levelContaniers[i].HasBarier, _levelContaniers[i].HasAirplane, _levelContaniers[i].HasCoins);
+            levelContanier.SetActiveInteractiveObjects(_levelContaniersInfo[i].HasJumper, _levelContaniersInfo[i].HasBooster,
+                _levelContaniersInfo[i].HasBarier, _levelContaniersInfo[i].HasAirplane, _levelContaniersInfo[i].HasCoins, !notHaveCheckPoint);
             _levelContanierList.Add(levelContanier);
         }
     }
@@ -79,13 +83,20 @@ public class Level : MonoBehaviour
 
 }
 [System.Serializable]
-public class LevelContanierInfo
+public struct LevelContanierInfo
 {
     [field: SerializeField] public LevelContanier Contanier { get; private set; }
-    [field: SerializeField] public bool HasJumper { get; private set; } = true; 
-    [field: SerializeField] public bool HasBooster { get; private set; } = true;
-    [field: SerializeField] public bool HasBarier { get; private set; } = true; 
+    [field: SerializeField] public bool HasJumper { get; private set; } 
+    [field: SerializeField] public bool HasBooster { get; private set; } 
+    [field: SerializeField] public bool HasBarier { get; private set; }  
     [field: SerializeField] public bool HasAirplane { get; private set; }
     [field: SerializeField] public bool HasCoins { get; private set; }
+}
+[System.Serializable]
+public struct LevelTimeInfo
+{
+    [Min(8)] public int goldTime;
+    [Min(10)] public int silverTime;
+    [Min(12)] public int bronzeTime;
 }
 

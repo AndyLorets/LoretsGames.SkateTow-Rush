@@ -1,20 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine; 
-public static class UITextKeyRenderController 
+public static class UIKeyRenderController 
 {
-    private static UITextKeyRender _staticKeyUIRenderer;
-    private static List<UITextKeyRender> _addedKeyUIRenderList = new List<UITextKeyRender>();
+    private static UIKeyRender _staticKeyUIRenderer;
+    private static List<UIKeyRender> _addedKeyUIRenderList = new List<UIKeyRender>();
     private static int _currentTextRendererIndex;
 
     public static void Init()
     {
         KeyManager.onChangeKey += Render;
     }
-    public static void RegistAddedKeyUIRender(UITextKeyRender uIText)
+    public static void RegistAddedUIRender(UIKeyRender uIText)
     {
         _addedKeyUIRenderList.Add(uIText);
     }
-    public static void RegistStaticKeyUIRender(UITextKeyRender uIText)
+    public static void RegistStaticUIRender(UIKeyRender uIText)
     {
         _staticKeyUIRenderer = uIText;
         RenderStaticKey();
