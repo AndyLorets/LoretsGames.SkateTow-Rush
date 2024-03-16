@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public static Action onSaveAll;
     public static bool isGameOver { get; private set; }
     public static bool isGameStart { get; private set; }
+    public static bool showKeyPicked { get; set; }
 
     public static bool DEBBUG_LOG = true;
     public static bool DEBBUG_WARNINGLOG = true;
@@ -21,7 +22,6 @@ public class GameManager : MonoBehaviour
 
     public const int nextLevel_fade_duration = 1;
     private const int framerate_value = 60;
-
     private void Awake()
     {
         SetDebbugState();
@@ -30,9 +30,7 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Missing <color=green>SceneLoader</color> component! Try running the game from the <color=black>Load_Scene</color>.");
 
         ServiceLocator.RegisterService(this);
-        GameDataManager.Load();
-
-        onGameStarted += HideTweens; 
+        onGameStarted += HideTweens;
     }
     private void Start()
     {
@@ -71,7 +69,8 @@ public class GameManager : MonoBehaviour
     }
     private void InitializeAll()
     {
-        // Init statics class
+        // Load statics class
+        GameDataManager.Load();
         MoneyManager.Init();
         GemManager.Init();
         TimerManager.Init();
@@ -111,6 +110,8 @@ public class GameManager : MonoBehaviour
 
         if (DEBBUG_LOG)
             Debug.Log($"Next Level. <color=#00FFFF>Current Level: {GameDataManager.CurrentLevel}</color>\"");
+
+        AdManager.ShowFullScreen(); 
     }
     public void Restart()
     {
@@ -118,6 +119,8 @@ public class GameManager : MonoBehaviour
 
         if (DEBBUG_LOG)
             Debug.Log($"Game is Restarted. <color=#00FFFF>Current Level: {GameDataManager.CurrentLevel}</color>\"");
+
+        AdManager.ShowFullScreen();
     }
     private static void SaveAll()
     {
@@ -138,6 +141,7 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = false;
         isGameStart = false;
+        showKeyPicked = false;
 
         // ResetAll statics class
         MoneyManager.Reset();    

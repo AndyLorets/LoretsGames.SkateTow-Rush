@@ -18,8 +18,8 @@ public static class TimerManager
     {
         GameManager.onSaveAll += Save;
         GameManager.onFinish += GetFinishedLevel;
-        ShopManager.onSoldItem += SetAddTimeValue;
-        _addTimeValue = GameDataManager.ItemValue.GetValue(ItemConvertor.ConvertTitleFromType(item_type)); 
+        ShopManager.OnUpgrade += SetAddTimeValue;
+        _addTimeValue = GameDataManager.UpgradeValue.GetValue(ItemConvertor.ConvertTitleFromType(item_type)); 
     }
     public static void Init(int value)
     {
@@ -30,10 +30,10 @@ public static class TimerManager
         if (itemType != item_type) return;
 
         string key = ItemConvertor.ConvertTitleFromType(item_type);
-        int lastValue = GameDataManager.ItemValue.GetValue(key);
+        int lastValue = GameDataManager.UpgradeValue.GetValue(key);
         int endValue = Math.Clamp(lastValue + value, lastValue + value, maxValue);
-        GameDataManager.ItemValue.SetValue(key, endValue);
-        _addTimeValue = GameDataManager.ItemValue.GetValue(key);
+        GameDataManager.UpgradeValue.SetValue(key, endValue);
+        _addTimeValue = GameDataManager.UpgradeValue.GetValue(key);
     }
     public static void AddTime()
     {
@@ -77,6 +77,6 @@ public static class TimerManager
         gameTime = 0; 
         GameManager.onSaveAll -= Save;
         GameManager.onFinish -= GetFinishedLevel;
-        ShopManager.onSoldItem -= SetAddTimeValue;
+        ShopManager.OnUpgrade -= SetAddTimeValue;
     }
 }

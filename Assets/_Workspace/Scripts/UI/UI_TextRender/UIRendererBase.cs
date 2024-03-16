@@ -32,7 +32,8 @@ public abstract class UIRendererBase : MonoBehaviour
     {
         if (_isStatic) 
         { 
-            _text.text = text; 
+            _text.text = text;
+
             return; 
         }
 
@@ -52,7 +53,6 @@ public abstract class UIRendererBase : MonoBehaviour
             .OnComplete(() => Invoke(nameof(DeactiveAdded), text_lifeTime));
 
     }
-
     protected virtual void DeactiveAdded()
     {
         _rectTransform.DOScale(Vector3.zero, tween_duration * .5f);

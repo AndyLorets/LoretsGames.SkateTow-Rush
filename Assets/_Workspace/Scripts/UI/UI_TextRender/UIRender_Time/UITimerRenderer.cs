@@ -7,7 +7,7 @@ public class UITimerRenderer : UIRendererBase
 
     private UIMoveTween _uiMoveTween; 
 
-    private const float tween_duretion = .25f;
+    private const float tween_duretion = .5f;
 
     private Tween _scaleTween;
     private Tween _colorTween;
@@ -49,9 +49,12 @@ public class UITimerRenderer : UIRendererBase
         if (_isStatic)
         {
             base.RenderTxt(text, startPos);
-            AnimateScale();
+
             if (TimerManager.gameDeadLineTime <= 5)
-                AnimateColor(_onChangeRedColor);
+            {
+                AnimateScale();
+                AnimateColor();
+            }
             return;
         }
         _text.enabled = true;   
@@ -66,14 +69,18 @@ public class UITimerRenderer : UIRendererBase
     }
     private void AnimateScale()
     {
-        _scaleTween.Kill(); 
-        _scaleTween = _text.transform.DOScale(Vector3.one * 1.1f, tween_duretion)
+        if (_scaleTween != null)
+            if (_scaleTween.IsPlaying()) return;  
+
+        _scaleTween = _text.transform.DOScale(Vector3.one * 1.25f, tween_duretion)
             .OnComplete(() => _scaleTween = _text.transform.DOScale(Vector3.one, tween_duretion)); 
     }
-    private void AnimateColor(Color color)
+    private void AnimateColor()
     {
-        _colorTween.Kill();
-        _colorTween = _text.DOColor(color, tween_duretion)
+        if (_colorTween != null)
+            if (_colorTween.IsPlaying()) return;
+
+        _colorTween = _text.DOColor(_onChangeRedColor, tween_duretion)
             .OnComplete(() => _colorTween = _text.DOColor(_startColor, tween_duretion));
     }
 }

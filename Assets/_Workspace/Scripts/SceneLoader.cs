@@ -27,7 +27,7 @@ public class SceneLoader : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        StartCoroutine(SceneLoading(true));
+        StartCoroutine(SceneLoading());
     }
     private void LoadGameScene()
     {

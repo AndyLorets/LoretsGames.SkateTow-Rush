@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 public class UIGemRender : UIRendererBase
@@ -27,9 +28,19 @@ public class UIGemRender : UIRendererBase
     {
         base.RenderTxt(text, startPos);
 
-        if (_isStatic) return;
+        if (_isStatic)
+        {
+            TweenPunchScale(.35f); 
+            return;
+        }
 
         _image.enabled = true;
+    }
+    private void TweenPunchScale(float scale, int vibrato = 1)
+    {
+        transform.DORewind();
+        transform.DOKill();
+        transform.DOPunchScale(Vector3.one * scale, .5f, vibrato);
     }
     protected override void DeactiveAdded()
     {

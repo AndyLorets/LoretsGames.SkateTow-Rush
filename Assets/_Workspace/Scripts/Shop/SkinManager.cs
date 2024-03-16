@@ -1,61 +1,56 @@
-using System;
 using UnityEngine;
 
 public class SkinManager : MonoBehaviour
 {
-    [SerializeField] private SkinInfo[] _skinOnfo;
-    private static int _currentSkinLevel;
+    [SerializeField] private SkateSkinInfo[] _skateSkinInfo;
 
     private void Awake()
     {
-        ShopManager.onSoldItem += SetSkinLevel;
-    }
-    private void Start()
-    {
-        Construct(); 
+        ShopManager.OnSelectSkin += SetSkinTexture;
     }
     private void OnDestroy()
     {
-        ShopManager.onSoldItem -= SetSkinLevel;
+        ShopManager.OnSelectSkin -= SetSkinTexture;
     }
-    private void SetSkinLevel(ItemType itemType, int value, int maxValue)
+    private void Start()
     {
-        for (int i = 0; i < _skinOnfo.Length; i++)
-            _skinOnfo[i].SetSkinLevel(itemType, value, maxValue);
-
-        Construct();
+        Invoke(nameof(LoadSkin), 1f); 
     }
-    private void Construct()
+    private void LoadSkin()
     {
-        _currentSkinLevel = GameDataManager.ItemValue.GetValue(_skinOnfo[_currentSkinLevel].itemKey);
+        for (int i = 0; i < _skateSkinInfo.Length; i++)
+            _skateSkinInfo[i].Load();
+    }
+    private void SetSkinTexture(ItemType itemType, SkateSkinsInfo skinInfo)
+    {
+        for (int i = 0; i < _skateSkinInfo.Length; i++)
+            _skateSkinInfo[i].SetSkinTexture(itemType, skinInfo);
+    }
+    [System.Serializable]
+    private struct SkateSkinInfo
+    {
+        [SerializeField] private Material mat;
+        [SerializeField] private ItemType item_type;
+        [Space(5)]
+        [SerializeField] private LineRenderer _lineRenderer;
+        [SerializeField] private Material _lineRenderMat;
 
-        for (int i = 0; i < _skinOnfo[_currentSkinLevel].ActiveObj.Length; i++)
+        public void Load()
         {
-            _skinOnfo[_currentSkinLevel].ActiveObj[i].SetActive(true);
-        }
-        for (int i = 0; i < _skinOnfo[_currentSkinLevel].DeactiveObj.Length; i++)
-        {
-            _skinOnfo[_currentSkinLevel].DeactiveObj[i].SetActive(false);
-        }
-    }
-    [Serializable]
-    private struct SkinInfo
-    {
-        [field: SerializeField] public GameObject[] ActiveObj { get; private set; }
-        [field: SerializeField] public GameObject[] DeactiveObj { get; private set; }
-        [field: SerializeField] public ItemType item_type { get; private set;}
-        public string itemKey => ItemConvertor.ConvertTitleFromType(item_type);
+            mat.mainTexture = GameDataManager.SkateTexture;
 
-        public void SetSkinLevel(ItemType itemType, int value, int maxValue)
+            int r = Random.Range(0, 2); 
+            if(r == 1)
+                _lineRenderer.material = _lineRenderMat;
+        }
+        public void SetSkinTexture(ItemType itemType, SkateSkinsInfo skinInfo)
         {
             if (itemType != item_type) return;
 
-            int lastValue = GameDataManager.ItemValue.GetValue(itemKey);
-            int endValue = Math.Clamp(lastValue + value, lastValue + value, maxValue);
-            GameDataManager.ItemValue.SetValue(itemKey, endValue);
+            mat.mainTexture = skinInfo.Texture;
+            _lineRenderer.material = _lineRenderMat;
         }
     }
-
 }
 
 

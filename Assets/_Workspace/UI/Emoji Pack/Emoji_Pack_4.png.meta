@@ -1,0 +1,400 @@
+fileFormatVersion: 2
+guid: 8fba47fc4a04d20488ad6e24c89dc452
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Emoji_Pack_4_9
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 333
+        width: 128
+        height: 150
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abbf4149fa7428e4b87119a4e5c940b5
+      internalID: -570159404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Emoji_Pack_4_10
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 334
+        width: 92
+        height: 146
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a11ffc4421be62e428958c91c568959d
+      internalID: 1446111878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Emoji_Pack_4_14
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 330
+        width: 94
+        height: 150
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d36a2778c5695a4fb91859a16184f74
+      internalID: 1436647997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Emoji_Pack_4_23
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 174
+        width: 115
+        height: 150
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6542f5bd829be640a1169e546c8710c
+      internalID: -627726691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Emoji_Pack_4_24
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 174
+        width: 132
+        height: 155
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ad9979381ca4b447aa5968ae1905fe8
+      internalID: 1061985517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Emoji_Pack_4_26
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 168
+        width: 98
+        height: 149
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3dc9fb8f67526f4ca1bdab287a49bb6
+      internalID: 122230743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Emoji_Pack_4_35
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 19
+        width: 107
+        height: 155
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fca7322b04a270469592610fb20e15c
+      internalID: 1472768055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Emoji_Pack_4_39
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 19
+        width: 113
+        height: 143
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6abb40adc4141b140a12a09786a6c27f
+      internalID: -1915051462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Emoji_Pack_4_40
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 18
+        width: 120
+        height: 143
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09f4d5f4ef1baeb46b3d8691323382dd
+      internalID: 1412467907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: a8840dbaa32bab44e9b8ae819d9ebc22
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Emoji_Pack_4_0: 537237795
+      Emoji_Pack_4_1: 682535931
+      Emoji_Pack_4_10: 1446111878
+      Emoji_Pack_4_11: -1826031856
+      Emoji_Pack_4_12: 1050028488
+      Emoji_Pack_4_13: 1564291326
+      Emoji_Pack_4_14: 1436647997
+      Emoji_Pack_4_15: 1326040031
+      Emoji_Pack_4_16: -87142622
+      Emoji_Pack_4_17: -2095919537
+      Emoji_Pack_4_18: -1631446098
+      Emoji_Pack_4_19: -618614500
+      Emoji_Pack_4_2: 512685447
+      Emoji_Pack_4_20: 217639444
+      Emoji_Pack_4_21: -1927580069
+      Emoji_Pack_4_22: -1155811801
+      Emoji_Pack_4_23: -627726691
+      Emoji_Pack_4_24: 1061985517
+      Emoji_Pack_4_25: -593416015
+      Emoji_Pack_4_26: 122230743
+      Emoji_Pack_4_27: 44632760
+      Emoji_Pack_4_28: 593122185
+      Emoji_Pack_4_29: -1143677067
+      Emoji_Pack_4_3: 163145807
+      Emoji_Pack_4_30: -1512896840
+      Emoji_Pack_4_31: -582624833
+      Emoji_Pack_4_32: -254284531
+      Emoji_Pack_4_33: 499802744
+      Emoji_Pack_4_34: 1398472731
+      Emoji_Pack_4_35: 1472768055
+      Emoji_Pack_4_36: -723897898
+      Emoji_Pack_4_37: 1220787556
+      Emoji_Pack_4_38: 439891159
+      Emoji_Pack_4_39: -1915051462
+      Emoji_Pack_4_4: 798989343
+      Emoji_Pack_4_40: 1412467907
+      Emoji_Pack_4_41: -753050751
+      Emoji_Pack_4_42: -2088894071
+      Emoji_Pack_4_43: -1544425961
+      Emoji_Pack_4_44: -1772770027
+      Emoji_Pack_4_45: 1622357043
+      Emoji_Pack_4_46: 959161481
+      Emoji_Pack_4_47: 63069348
+      Emoji_Pack_4_48: -1188097964
+      Emoji_Pack_4_49: -2129548482
+      Emoji_Pack_4_5: -1054106786
+      Emoji_Pack_4_50: -1203565846
+      Emoji_Pack_4_51: 352687694
+      Emoji_Pack_4_52: 486963250
+      Emoji_Pack_4_53: -2095253835
+      Emoji_Pack_4_54: 549593866
+      Emoji_Pack_4_55: 2097842028
+      Emoji_Pack_4_56: -1737894759
+      Emoji_Pack_4_57: -389151889
+      Emoji_Pack_4_6: -1554449900
+      Emoji_Pack_4_7: -1344414112
+      Emoji_Pack_4_8: 2077161045
+      Emoji_Pack_4_9: -570159404
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

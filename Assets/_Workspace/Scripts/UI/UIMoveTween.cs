@@ -14,6 +14,7 @@ public class UIMoveTween : MonoBehaviour
     [SerializeField] private bool _deactivateOnHide = false;
     [SerializeField] private bool _unscaled = false;
     [SerializeField] private bool _bouncedScale;
+    [SerializeField] private bool _onlyScale;
 
     private RectTransform _rectTransform;
     private Vector3 _hiddenPosition;
@@ -49,7 +50,8 @@ public class UIMoveTween : MonoBehaviour
 
         if (_unscaled)
         {
-            transform.DOMove(_shownPoint.position, duration).SetEase(_moveEase).SetUpdate(true).OnComplete(() => { transform.position = _shownPoint.transform.position; });
+            if (!_onlyScale)
+                transform.DOMove(_shownPoint.position, duration).SetEase(_moveEase).SetUpdate(true).OnComplete(() => { transform.position = _shownPoint.transform.position; });
 
             Vector3 bounceScale = _bouncedScale ? _showScale * bounce_scale_cofficient : _showScale;
             float bounceDuration = _bouncedScale ? duration * bounce_duration_cofficient : duration;
@@ -64,7 +66,8 @@ public class UIMoveTween : MonoBehaviour
         }
         else
         {
-            transform.DOMove(_shownPoint.position, duration).SetEase(_moveEase).OnComplete(() => { transform.position = _shownPoint.transform.position; });
+            if (!_onlyScale)
+                transform.DOMove(_shownPoint.position, duration).SetEase(_moveEase).OnComplete(() => { transform.position = _shownPoint.transform.position; });
             transform.DOScale(_showScale, duration).SetEase(_moveEase);
         }
     }
@@ -83,7 +86,8 @@ public class UIMoveTween : MonoBehaviour
         {
             if (_unscaled)
             {
-                transform.DOMove(_hiddenPoint.position, duration).SetEase(_moveEase).SetUpdate(true).OnComplete(() => { transform.position = _hiddenPoint.transform.position; });
+                if (!_onlyScale)
+                    transform.DOMove(_hiddenPoint.position, duration).SetEase(_moveEase).SetUpdate(true).OnComplete(() => { transform.position = _hiddenPoint.transform.position; });
 
                 Vector3 bounceScale = _bouncedScale ? _showScale * bounce_scale_cofficient : _hideScale;
                 float bounceDuration = _bouncedScale ? duration * bounce_duration_cofficient : duration;
@@ -101,7 +105,8 @@ public class UIMoveTween : MonoBehaviour
             }
             else
             {
-                transform.DOMove(_hiddenPoint.position, duration).SetEase(_moveEase).OnComplete(() => { transform.position = _hiddenPoint.transform.position; });
+                if (!_onlyScale)
+                    transform.DOMove(_hiddenPoint.position, duration).SetEase(_moveEase).OnComplete(() => { transform.position = _hiddenPoint.transform.position; });
                 transform.DOScale(_hideScale, duration).SetEase(_moveEase).OnComplete(() => { gameObject.SetActive(false); });
             }
         }
@@ -109,12 +114,14 @@ public class UIMoveTween : MonoBehaviour
         {
             if (_unscaled)
             {
-                transform.DOMove(_hiddenPoint.position, duration).SetEase(_moveEase).SetUpdate(true);
+                if (!_onlyScale)
+                    transform.DOMove(_hiddenPoint.position, duration).SetEase(_moveEase).SetUpdate(true);
                 transform.DOScale(_hideScale, duration).SetEase(_moveEase).SetUpdate(true).OnComplete(() => { transform.position = _hiddenPoint.transform.position; });
             }
             else
             {
-                transform.DOMove(_hiddenPoint.position, duration).SetEase(_moveEase);
+                if (!_onlyScale)
+                    transform.DOMove(_hiddenPoint.position, duration).SetEase(_moveEase);
                 transform.DOScale(_hideScale, duration).SetEase(_moveEase).OnComplete(() => { transform.position = _hiddenPoint.transform.position; });
             }
         }
@@ -137,7 +144,8 @@ public class UIMoveTween : MonoBehaviour
 
         if (_atStartPosition)
         {
-            transform.position = _hiddenPosition;
+            if (!_onlyScale)
+                transform.position = _hiddenPosition;
             transform.localScale = _hideScale;
             _isShown = false;
 

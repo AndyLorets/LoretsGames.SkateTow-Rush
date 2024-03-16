@@ -5,7 +5,7 @@ public class PlayerMoveController : MonoBehaviour
     [SerializeField, Range(.2f, 1f)] private float _movementSpeed = 0.25f;
     [SerializeField, Range(7f, 10)] private float _maxJumpForce = 7.0f;
 
-    [SerializeField] private float _currentJumpForce; 
+    private float _currentJumpForce; 
 
     private Rigidbody _rb;
     private const float clamp_velocity_x = 10;

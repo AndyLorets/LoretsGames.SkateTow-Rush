@@ -35,7 +35,7 @@ public static class UITimerRenderController
     }
     private static void Render(bool isAdded)
     {
-        int itemValue = GameDataManager.ItemValue.GetValue(ItemConvertor.ConvertTitleFromType(ItemType.UpgradeTime)); 
+        int itemValue = GameDataManager.UpgradeValue.GetValue(ItemConvertor.ConvertTitleFromType(ItemType.UpgradeTime)); 
         string textAdded = $"+{itemValue}";
         RenderStatic();
         if (isAdded)

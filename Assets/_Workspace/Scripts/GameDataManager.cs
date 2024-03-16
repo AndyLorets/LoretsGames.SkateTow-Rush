@@ -2,7 +2,7 @@ using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
 using System;
-
+using GamePush;
 public static class GameDataManager
 {
     private static readonly string _savePath;
@@ -12,11 +12,16 @@ public static class GameDataManager
 
     public static Action onFirstSave;
 
+    private static SaveDataContainer _saveDataContainer = new SaveDataContainer();
+
+    #region SerializableDictionary
+
     [Serializable]
     public class SerializableDictionary<TKey, TValue>
     {
         public List<TKey> keys = new List<TKey>();
         public List<TValue> values = new List<TValue>();
+
 
         public SerializableDictionary() { }
 
@@ -67,18 +72,22 @@ public static class GameDataManager
             return dict;
         }
     }
+    #endregion
+
     private class SaveDataContainer
     {
         public int currentLevel;
         public int moneyCount;
         public int gemCount;
         public SerializableDictionary<int, float> bestLevelTime = new SerializableDictionary<int, float>();
-        public SerializableDictionary<string, int> itemValue = new SerializableDictionary<string, int>();
-        public SerializableDictionary<string, int> itemPrice = new SerializableDictionary<string, int>();
+        public SerializableDictionary<string, int> upgradeValue = new SerializableDictionary<string, int>();
+        public SerializableDictionary<string, int> upgradePrice = new SerializableDictionary<string, int>();
+
+        public SerializableDictionary<string, bool> skinAvable = new SerializableDictionary<string, bool>();
+        public Texture skateTexture;
     }
 
-    private static SaveDataContainer _saveDataContainer = new SaveDataContainer();
-
+    // GENERAL
     public static int CurrentLevel
     {
         get => _saveDataContainer.currentLevel;
@@ -99,32 +108,47 @@ public static class GameDataManager
         get => _saveDataContainer.bestLevelTime;
         set => _saveDataContainer.bestLevelTime = value;
     }
-    public static SerializableDictionary<string, int> ItemValue
+    // UPGRADE
+    public static SerializableDictionary<string, int> UpgradeValue
     {
-        get => _saveDataContainer.itemValue;
-        set => _saveDataContainer.itemValue = value;
+        get => _saveDataContainer.upgradeValue;
+        set => _saveDataContainer.upgradeValue = value;
     }
-    public static SerializableDictionary<string, int> ItemPrice
+    public static SerializableDictionary<string, int> UpgradePrice
     {
-        get => _saveDataContainer.itemPrice;
-        set => _saveDataContainer.itemPrice = value;
+        get => _saveDataContainer.upgradePrice;
+        set => _saveDataContainer.upgradePrice = value;
+    }
+    // SKINS
+    public static SerializableDictionary<string, bool> SkinAvable
+    {
+        get => _saveDataContainer.skinAvable;
+        set => _saveDataContainer.skinAvable = value;
+    }
+    public static Texture SkateTexture
+    {
+        get => _saveDataContainer.skateTexture;
+        set => _saveDataContainer.skateTexture = value;
     }
     static GameDataManager()
     {
-#if UNITY_EDITOR
-        string saveFolder = Path.Combine("_Workspace", "Saves");
+#if UNITY_EDITOR 
+        string saveFolder = Path.Combine("_Workspace", $"Saves");
         _savePath = Path.Combine(Application.dataPath, saveFolder, $"{SAVE_KEY}.json");
 #else
-        _savePath = Path.Combine(Application.persistentDataPath, $"{SAVE_KEY}.json");
+        _savePath = Path.Combine(Application.streamingAssetsPath, $"{SAVE_KEY}.json");       
 #endif
-        // Создаем директорию сохранения, если она отсутствует
         string directoryPath = Path.GetDirectoryName(_savePath);
-        if (!Directory.Exists(directoryPath))
+        if (!string.IsNullOrEmpty(directoryPath))
         {
+            // Создать каталог, только если путь не пустой или null
             Directory.CreateDirectory(directoryPath);
         }
     }
-
+    public static string GetJson()
+    {
+        return File.ReadAllText(_savePath);
+    }
     public static void Load()
     {
         // Проверяем наличие файла перед загрузкой
@@ -132,10 +156,8 @@ public static class GameDataManager
         {
             try
             {
-                // Читаем JSON из файла
-                string json = File.ReadAllText(_savePath);
                 // Десериализуем JSON в объект
-                _saveDataContainer = JsonUtility.FromJson<SaveDataContainer>(json);
+                _saveDataContainer = JsonUtility.FromJson<SaveDataContainer>(GetJson());
 
                 if (GameManager.DEBBUG_LOG)
                     Debug.Log("Data loaded");
@@ -158,6 +180,7 @@ public static class GameDataManager
     {
         onFirstSave?.Invoke();
         Save();
+        Load();
     }
     public static void Save()
     {
@@ -167,6 +190,7 @@ public static class GameDataManager
         {
             // Сохраняем JSON в файл
             File.WriteAllText(_savePath, json);
+
             if (GameManager.DEBBUG_LOG)
                 Debug.Log($"Data saved");
         }

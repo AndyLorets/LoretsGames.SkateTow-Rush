@@ -51,6 +51,7 @@ public class LevelManager : MonoBehaviour
         {
             GameDataManager.BestLevelTime.SetValue(i, 0);
         }
+        PlayerPrefs.SetInt("FFF", PlayerPrefs.GetInt("FFF") + 1); 
     }
     private void Save()
     {

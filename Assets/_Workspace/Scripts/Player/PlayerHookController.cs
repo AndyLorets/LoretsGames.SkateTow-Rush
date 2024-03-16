@@ -13,7 +13,7 @@ public class PlayerHookController : MonoBehaviour
     private const float min_distance_toHook = 5f;
     private float CheckDistanceToHook => Vector3.Distance(transform.position, _hookObj.position);
 
-    private const ItemType _itemType = ItemType.UpgradeMaxSpeed; 
+    private const ItemType _itemType = ItemType.UpgradeMoveSpeed; 
 
     private void Awake()
     {
@@ -22,17 +22,17 @@ public class PlayerHookController : MonoBehaviour
     }
     private void Start()
     {
-        ShopManager.onSoldItem += SetMaxSpeed; 
+        ShopManager.OnUpgrade += SetMaxSpeed; 
 
         Construct(); 
     }
     private void OnDestroy()
     {
-        ShopManager.onSoldItem -= SetMaxSpeed;
+        ShopManager.OnUpgrade -= SetMaxSpeed;
     }
     private void Construct()
     {
-        _moveMaxSpeed = GameDataManager.ItemValue.GetValue(ItemConvertor.ConvertTitleFromType(_itemType));
+        _moveMaxSpeed = GameDataManager.UpgradeValue.GetValue(ItemConvertor.ConvertTitleFromType(_itemType));
     }
     private void FixedUpdate()
     {
@@ -95,9 +95,9 @@ public class PlayerHookController : MonoBehaviour
         if (itemType != _itemType) return;
 
         string key = ItemConvertor.ConvertTitleFromType(_itemType);
-        int lastValue = GameDataManager.ItemValue.GetValue(key);
+        int lastValue = GameDataManager.UpgradeValue.GetValue(key);
         int endValue = Math.Clamp(lastValue + value, lastValue + value, maxValue);
-        GameDataManager.ItemValue.SetValue(key, lastValue + value);
-        _moveMaxSpeed = GameDataManager.ItemValue.GetValue(key); 
+        GameDataManager.UpgradeValue.SetValue(key, endValue);
+        _moveMaxSpeed = GameDataManager.UpgradeValue.GetValue(key); 
     }
 }

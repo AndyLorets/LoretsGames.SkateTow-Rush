@@ -1,7 +1,9 @@
 using System;
+
 public static class ShopManager 
 {
-    public static Action<ItemType, int, int> onSoldItem; 
+    public static Action<ItemType, int, int> OnUpgrade;
+    public static Action<ItemType, SkateSkinsInfo> OnSelectSkin;
     private static int GetSellRes(PriceType priceType)
     {
         switch (priceType)
@@ -13,7 +15,7 @@ public static class ShopManager
         }
         return 0;   
     }
-    private static void SetSellRes(PriceType priceType, int value)
+    private static void RemoveRes(PriceType priceType, int value)
     {
         switch (priceType)
         {
@@ -25,23 +27,41 @@ public static class ShopManager
                 break;
         }
     }
-    public static void Sell(SalesItemInfo salesItemInfo, Action onSuccess, Action onFailed)
+    public static void SetSkin(SkateSkinsInfo skinInfo, Action onSuccess, Action onFailed)
+    {
+        int price = skinInfo.Price;
+        PriceType priceType = skinInfo.PriceType;
+        ItemType itemType = skinInfo.Type;
+
+        if (!skinInfo.Avable)
+        {
+            if (GetSellRes(priceType) < price)
+            {
+                onFailed?.Invoke();
+                return;
+            }
+
+            RemoveRes(priceType, price);
+        }
+
+        onSuccess?.Invoke();
+        OnSelectSkin?.Invoke(itemType, skinInfo);
+    }
+    public static void Upgrade(ItemInfoBase salesItemInfo, Action onSuccess, Action onFailed, int incrimentValue, int maxValue)
     {
         int price = salesItemInfo.Price;
-        int value = salesItemInfo.IncrimentValue;
-        int maxValue = salesItemInfo.MaxValue;
         PriceType priceType = salesItemInfo.PriceType;
         ItemType itemType = salesItemInfo.Type;
 
         if (GetSellRes(priceType) < price)
         {
-            onFailed?.Invoke(); 
+            onFailed?.Invoke();
             return;
         }
 
-        onSoldItem?.Invoke(itemType, value, maxValue);
-        onSuccess?.Invoke(); 
+        OnUpgrade?.Invoke(itemType, incrimentValue, maxValue);
+        onSuccess?.Invoke();
 
-        SetSellRes(priceType, price);
+        RemoveRes(priceType, price);
     }
 }
