@@ -15,8 +15,10 @@ public class AirplaneManager : MonoBehaviour
 
     void Start()   
     {
-        ConstructAirplanes();
-        StartCoroutine(AirplaneActivizator());  
+        gameObject.SetActive(false);
+
+        //ConstructAirplanes();
+        //StartCoroutine(AirplaneActivizator());  
     }
 
     private void ConstructAirplanes()

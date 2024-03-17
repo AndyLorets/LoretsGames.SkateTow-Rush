@@ -2,15 +2,20 @@ using UnityEngine;
 
 public static class GrapplingBehaviour
 {
-    public static Transform GrapplePoint { get; private set; }
+    private static Transform _grappleTransform;
+    private static Vector3 _grappleOffset; 
     public static bool isGrappling { get; private set; }
 
-    public static void StartGrapple(Transform grapplePoint)
+    public static void StartGrapple(Transform grappleTransform, Vector3 offset)
     {
-        GrapplePoint = grapplePoint;
+        _grappleTransform = grappleTransform;
+        _grappleOffset = offset;
         isGrappling = true; 
     }
-
+    public static Vector3 GetDirection()
+    {
+        return _grappleTransform.position + _grappleOffset; 
+    }
     public static void StopGrapple()
     {
         isGrappling = false;

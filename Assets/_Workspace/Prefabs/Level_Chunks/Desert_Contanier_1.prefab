@@ -832,12 +832,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _finish: {fileID: 3287860100036536544}
-  _jumper: {fileID: 60878951575447283}
-  _booster: {fileID: 3027251416606876093}
-  _barier: {fileID: 7442455346038704694}
   _airplanes: {fileID: 1013175346923003998}
-  _coins: {fileID: 8215003881657464263}
   _checkPoint: {fileID: 6144136282755434070}
+  _jumpers: {fileID: 60878951575447283}
+  _boosters: {fileID: 3027251416606876093}
+  _bariers: {fileID: 7442455346038704694}
+  _pickeds: {fileID: 8215003881657464263}
   _finishEffects: {fileID: 6612463508949494754}
 --- !u!65 &7121341622666135155
 BoxCollider:
@@ -7237,7 +7237,7 @@ PrefabInstance:
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8
+      value: -1.3000002
       objectReference: {fileID: 0}
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
@@ -14150,7 +14150,7 @@ PrefabInstance:
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.3000002
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}

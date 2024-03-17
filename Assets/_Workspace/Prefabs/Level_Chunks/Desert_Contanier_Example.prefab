@@ -304,12 +304,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _finish: {fileID: 4898866801059731482}
-  _jumper: {fileID: 42358065973352317}
-  _booster: {fileID: 968540894105888398}
-  _barier: {fileID: 1561445982737825703}
   _airplanes: {fileID: 9121987023122977244}
-  _coins: {fileID: 4242198907809274673}
   _checkPoint: {fileID: 467499205832697822}
+  _jumpers: {fileID: 0}
+  _boosters: {fileID: 0}
+  _bariers: {fileID: 0}
+  _pickeds: {fileID: 0}
   _finishEffects: {fileID: 3862019988868029208}
 --- !u!65 &4437688253087501258
 BoxCollider:
@@ -7384,7 +7384,7 @@ PrefabInstance:
     - target: {fileID: 1692249772883252771, guid: 75a1413b21dab1f4996d884cae3259c0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8
+      value: -1.3000002
       objectReference: {fileID: 0}
     - target: {fileID: 1692249772883252771, guid: 75a1413b21dab1f4996d884cae3259c0,
         type: 3}
@@ -7439,12 +7439,6 @@ PrefabInstance:
 --- !u!4 &965057939284720356 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1692249772883252771, guid: 75a1413b21dab1f4996d884cae3259c0,
-    type: 3}
-  m_PrefabInstance: {fileID: 1880401445955398855}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &968540894105888398 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1686727705025022537, guid: 75a1413b21dab1f4996d884cae3259c0,
     type: 3}
   m_PrefabInstance: {fileID: 1880401445955398855}
   m_PrefabAsset: {fileID: 0}
@@ -27758,12 +27752,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 139ddfd5d30b1af40976321d9f3442f1, type: 3}
---- !u!1 &42358065973352317 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7396735157681262382, guid: 139ddfd5d30b1af40976321d9f3442f1,
-    type: 3}
-  m_PrefabInstance: {fileID: 7363393089220302931}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7237317236138092744 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 162158921653973147, guid: 139ddfd5d30b1af40976321d9f3442f1,
@@ -30893,7 +30881,7 @@ PrefabInstance:
     - target: {fileID: 1118700101614000830, guid: d4ecf01f12dd32242a068facc91096fc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.3999996
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 1118700101614000830, guid: d4ecf01f12dd32242a068facc91096fc,
         type: 3}

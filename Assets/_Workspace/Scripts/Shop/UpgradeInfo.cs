@@ -26,7 +26,6 @@ public class UpgradeInfo : ItemInfoBase
         {
             GameDataManager.UpgradePrice.SetValue(ItemConvertor.ConvertTitleFromType(Type), Price);
             GameDataManager.UpgradeValue.SetValue(ItemConvertor.ConvertTitleFromType(Type), StartValue);
-            PlayerPrefs.SetInt("FFF", PlayerPrefs.GetInt("FFF") + 1);
         }
     }
     public void UpdateInfo()

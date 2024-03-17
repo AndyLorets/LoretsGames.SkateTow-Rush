@@ -105,12 +105,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _finish: {fileID: 2991438713515399425}
-  _jumper: {fileID: 6456460603858590122}
-  _booster: {fileID: 8559572116017850128}
-  _barier: {fileID: 3452678988465973995}
   _airplanes: {fileID: 1498492737096769069}
-  _coins: {fileID: 8124923001384314908}
   _checkPoint: {fileID: 1183388592444733584}
+  _jumpers: {fileID: 6456460603858590122}
+  _boosters: {fileID: 8559572116017850128}
+  _bariers: {fileID: 3452678988465973995}
+  _pickeds: {fileID: 8124923001384314908}
   _finishEffects: {fileID: 6910591627461302787}
 --- !u!65 &8727045412827371043
 BoxCollider:
@@ -1049,7 +1049,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2941809759731662475}
   m_Layer: 2
-  m_Name: Coins
+  m_Name: Pickeds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3410,7 +3410,7 @@ PrefabInstance:
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.3999996
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
@@ -3460,7 +3460,7 @@ PrefabInstance:
     - target: {fileID: 7393179484729811621, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
       propertyPath: m_Name
-      value: Coins_onLine
+      value: Picked
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14268,7 +14268,7 @@ PrefabInstance:
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8
+      value: 5.3999996
       objectReference: {fileID: 0}
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
@@ -14318,7 +14318,7 @@ PrefabInstance:
     - target: {fileID: 7393179484729811621, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
       propertyPath: m_Name
-      value: Coins_onLine (1)
+      value: Picked
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16635,7 +16635,7 @@ PrefabInstance:
     - target: {fileID: 162158921653973147, guid: 139ddfd5d30b1af40976321d9f3442f1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.3000002
+      value: 5.3999996
       objectReference: {fileID: 0}
     - target: {fileID: 162158921653973147, guid: 139ddfd5d30b1af40976321d9f3442f1,
         type: 3}
@@ -20039,7 +20039,7 @@ PrefabInstance:
     - target: {fileID: 1118700101614000830, guid: d4ecf01f12dd32242a068facc91096fc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.3000002
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 1118700101614000830, guid: d4ecf01f12dd32242a068facc91096fc,
         type: 3}

@@ -24,7 +24,7 @@ public struct ItemConvertor
     {
         switch (itemType)
         {
-            case ItemType.UpgradeMoveSpeed: return $"Upgrade Move Speed";
+            case ItemType.UpgradeMoveSpeed: return $"Move Speed";
             case ItemType.UpgradeTime: return $"Upgrade Time";
             case ItemType.SkinSkate_1: return $"Skate Skin 1";
             case ItemType.SkinSkate_2: return $"Skate Skin 2";

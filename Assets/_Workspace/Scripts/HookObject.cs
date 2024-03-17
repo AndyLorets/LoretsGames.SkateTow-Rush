@@ -12,32 +12,29 @@ public class HookObject : MonoBehaviour
     private const float max_hook_distance = 200f;
     private bool CanHook => Vector3.Distance(transform.position, _player.transform.position) < max_hook_distance; 
 
-    public delegate void HookCallback();
-    public HookCallback onHook; 
 
     private void Start()
     {
-        Construct(); 
+        //Construct(); 
     }
-    private void Construct()
-    {
-        _player = ServiceLocator.GetService<Player>();
-        _playerHookController = ServiceLocator.GetService<PlayerHookController>();
-        //if (_prefabAfterHooking)
-        //    _getPrefabAfterHooking.ConstructLevelContaniers(this); 
-    }
-    private void OnMouseDown()
-    {
-        if (CanHook)
-        {
-            _playerHookController.SetHookObje(transform);
-            onHook?.Invoke(); 
-        }
-    }
-    private void OnMouseUp()
-    {
-        _playerHookController.ClearHookObj();
-    }
+    //private void Construct()
+    //{
+    //    _player = ServiceLocator.GetService<Player>();
+    //    _playerHookController = ServiceLocator.GetService<PlayerHookController>();
+    //    //if (_prefabAfterHooking)
+    //    //    _getPrefabAfterHooking.ConstructLevelContaniers(this); 
+    //}
+    //private void OnMouseDown()
+    //{
+    //    if (CanHook)
+    //    {
+    //        //_playerHookController.SetHookObje(transform);
+    //    }
+    //}
+    //private void OnMouseUp()
+    //{
+    //    _playerHookController.ClearHookObj();
+    //}
 
 }
 //[System.Serializable]

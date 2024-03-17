@@ -46,7 +46,7 @@ public class GrapplingRope : MonoBehaviour
         spring.SetStrength(strength);
         spring.Update(Time.deltaTime);
 
-        var grapplePoint = GrapplingBehaviour.GrapplePoint.position + Vector3.up;
+        var grapplePoint = GrapplingBehaviour.GetDirection();
         var gunTipPosition = transform.position;
         var up = Quaternion.LookRotation((grapplePoint - gunTipPosition).normalized) * Vector2.up;
 

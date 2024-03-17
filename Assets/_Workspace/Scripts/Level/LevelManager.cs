@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -16,27 +17,37 @@ public class LevelManager : MonoBehaviour
         GameManager.onSaveAll += Save;
         GameManager.onRestart += OnRestart;
         GameDataManager.onFirstSave += OnFirstSave;
-
-        Construt();
+ 
+        Invoke(nameof(Construt), .2f);
     }
     public Level ActiveLevel => _levels[_currentLevel]; 
+
     private void Construt()
     {
-        _levels = new Level[_levelsParent.childCount];
-        _currentLevel = GameDataManager.CurrentLevel; 
+        _currentLevel = GameDataManager.CurrentLevel;
+
+        Init();
+
+        if (_levels.Length != GameDataManager.LEVELS_COUNT)
+        {
+            if (GameManager.DEBBUG_WARNINGLOG)
+                Debug.LogWarning("Number of levels does not match the constant in <color=green>GameDataLoader</color>\"");
+        }
+
+
+    }
+    private void Init()
+    {
+        if (_levels == null)
+            _levels = new Level[_levelsParent.childCount];
+
         for (int i = 0; i < _levels.Length; i++)
         {
             _levels[i] = _levelsParent.GetChild(i).GetComponent<Level>();
             _levels[i].gameObject.SetActive(false); 
         }
 
-        _levels[_currentLevel].gameObject.SetActive(true); 
-        
-        if (_levels.Length != GameDataManager.LEVELS_COUNT)
-        {
-            if (GameManager.DEBBUG_WARNINGLOG)
-                Debug.LogWarning("Number of levels does not match the constant in <color=green>GameDataLoader</color>\""); 
-        }
+        _levels[_currentLevel].gameObject.SetActive(true);
     }
 
     private void NextLevel()
@@ -47,11 +58,13 @@ public class LevelManager : MonoBehaviour
     }
     private void OnFirstSave()
     {
+        if(_levels == null)
+            _levels = new Level[_levelsParent.childCount];
+
         for (int i = 0; i < _levels.Length; i++)
         {
             GameDataManager.BestLevelTime.SetValue(i, 0);
         }
-        PlayerPrefs.SetInt("FFF", PlayerPrefs.GetInt("FFF") + 1); 
     }
     private void Save()
     {

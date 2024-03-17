@@ -5,15 +5,14 @@ public class PlayerHookController : MonoBehaviour
 {
     [SerializeField, Range(20, 40)] private int _rotateSpeed = 30;
 
-    private float _moveMaxSpeed; 
+    private float _moveMaxSpeed;
 
+    private Vector3 _hookOffset; 
     private Transform _hookObj;
     private Rigidbody _rb;
 
-    private const float min_distance_toHook = 5f;
-    private float CheckDistanceToHook => Vector3.Distance(transform.position, _hookObj.position);
-
-    private const ItemType _itemType = ItemType.UpgradeMoveSpeed; 
+    private const ItemType _itemType = ItemType.UpgradeMoveSpeed;
+    private Vector3 HookDirection => (_hookObj.position + _hookOffset) - transform.position;
 
     private void Awake()
     {
@@ -39,6 +38,22 @@ public class PlayerHookController : MonoBehaviour
         if (GameManager.isGameStart)
             Move();
     }
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                SetHookObje(hit.transform, hit.point); 
+                //Debug.Log("Name of clicked object: " + hit.transform.name);
+            }
+        }
+        if (Input.GetMouseButtonUp(0))
+            ClearHookObj(); 
+    }
     private void Move()
     {
         if (_hookObj == null)
@@ -48,12 +63,8 @@ public class PlayerHookController : MonoBehaviour
             return;
         }
 
-        Vector3 hookDirection = _hookObj.position - transform.position;
-        AddForce(hookDirection);
-        LookAtForce(hookDirection);
-
-        if (CheckDistanceToHook < min_distance_toHook || _hookObj.transform.position.z <= transform.position.z)
-            ClearHookObj();
+        AddForce(HookDirection);
+        LookAtForce(HookDirection);
     }
     private void AddForce(Vector3 forceDirection)
     {
@@ -71,16 +82,20 @@ public class PlayerHookController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(force), Time.deltaTime * _rotateSpeed);
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
-    public void SetHookObje(Transform hook)
+    private void SetHookObje(Transform hook, Vector3 offset)
     {
-        if (!GameManager.isGameStart && !GameManager.isGameOver)
-            GameManager.StartGame();
+        Vector3 hookOffset = offset - hook.transform.position;
 
+        _hookOffset = hookOffset;
         _hookObj = hook;
+
         Vector3 force = _rb.velocity;
         force.x = force.x * .7f;
         _rb.velocity = force;
-        GrapplingBehaviour.StartGrapple(_hookObj);
+
+        GrapplingBehaviour.StartGrapple(_hookObj, _hookOffset);
+        if (!GameManager.isGameStart && !GameManager.isGameOver)
+            GameManager.StartGame();
     }
     public void ClearHookObj()
     {

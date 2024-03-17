@@ -49,7 +49,7 @@ public class Level : MonoBehaviour
             levelContanier.isFinishContanier = i == _levelContaniersInfo.Length - 1 ? true : false;
             levelContanier.onLevelEnter += CheckPoint;
             levelContanier.SetActiveInteractiveObjects(_levelContaniersInfo[i].HasJumper, _levelContaniersInfo[i].HasBooster,
-                _levelContaniersInfo[i].HasBarier, _levelContaniersInfo[i].HasAirplane, _levelContaniersInfo[i].HasCoins, !notHaveCheckPoint);
+                _levelContaniersInfo[i].HasBarier, _levelContaniersInfo[i].HasAirplane, _levelContaniersInfo[i].HasPicked, !notHaveCheckPoint);
             _levelContanierList.Add(levelContanier);
         }
     }
@@ -89,7 +89,7 @@ public struct LevelContanierInfo
     [field: SerializeField] public bool HasBooster { get; private set; } 
     [field: SerializeField] public bool HasBarier { get; private set; }  
     [field: SerializeField] public bool HasAirplane { get; private set; }
-    [field: SerializeField] public bool HasCoins { get; private set; }
+    [field: SerializeField] public bool HasPicked { get; private set; }
 }
 [System.Serializable]
 public struct LevelTimeInfo
