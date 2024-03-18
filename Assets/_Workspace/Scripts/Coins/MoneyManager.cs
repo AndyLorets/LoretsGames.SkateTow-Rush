@@ -11,7 +11,8 @@ public static class MoneyManager
     public static void Add(int value, Vector3 startPos = new Vector3())
     {
         currentCount += value;
-        onChange?.Invoke(value, startPos);  
+        onChange?.Invoke(value, startPos);
+        AudioManager.PlayOneShot(AudioManager.SoundType.Picked); 
     }
     public static void Remove(int value)
     {

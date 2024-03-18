@@ -8,11 +8,11 @@ public class EmojiManager : MonoBehaviour
     private int _lastEmojiPrefab;
     private void OnEnable()
     {
-        CheckSpeed.onEmoji += SendEmoji; 
+        EmojiBehaviour.onEmoji += SendEmoji; 
     }
     private void OnDisable()
     {
-        CheckSpeed.onEmoji -= SendEmoji;
+        EmojiBehaviour.onEmoji -= SendEmoji;
     }
     private void SendEmoji(string text, Sprite sprite)
     {

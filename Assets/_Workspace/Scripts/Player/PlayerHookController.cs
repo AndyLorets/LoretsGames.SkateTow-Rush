@@ -10,9 +10,11 @@ public class PlayerHookController : MonoBehaviour
     private Vector3 _hookOffset; 
     private Transform _hookObj;
     private Rigidbody _rb;
-
-    private const ItemType _itemType = ItemType.UpgradeMoveSpeed;
     private Vector3 HookDirection => (_hookObj.position + _hookOffset) - transform.position;
+    private const ItemType _itemType = ItemType.UpgradeMoveSpeed;
+    private const float max_speed_bonus = 20f;
+
+    private float _clampVelocityZ;
 
     private void Awake()
     {
@@ -32,15 +34,19 @@ public class PlayerHookController : MonoBehaviour
     private void Construct()
     {
         _moveMaxSpeed = GameDataManager.UpgradeValue.GetValue(ItemConvertor.ConvertTitleFromType(_itemType));
+        _clampVelocityZ = _moveMaxSpeed + max_speed_bonus; 
     }
     private void FixedUpdate()
     {
-        if (GameManager.isGameStart)
-            Move();
+        if (!GameManager.isGameStart)
+            return;
+
+        Move();
+        ClampVelocity();
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && GameManager.isGameStart)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -58,8 +64,7 @@ public class PlayerHookController : MonoBehaviour
     {
         if (_hookObj == null)
         {
-            if (GameManager.isGameStart)
-                LookAtForce(Vector3.forward);
+            LookAtForce(Vector3.forward);
             return;
         }
 
@@ -94,8 +99,6 @@ public class PlayerHookController : MonoBehaviour
         _rb.velocity = force;
 
         GrapplingBehaviour.StartGrapple(_hookObj, _hookOffset);
-        if (!GameManager.isGameStart && !GameManager.isGameOver)
-            GameManager.StartGame();
     }
     public void ClearHookObj()
     {
@@ -104,7 +107,12 @@ public class PlayerHookController : MonoBehaviour
         _hookObj = null;
         GrapplingBehaviour.StopGrapple();
     }
-
+    private void ClampVelocity()
+    {
+        float clampZ = _rb.velocity.z;
+        clampZ = Mathf.Clamp(clampZ, 0, _clampVelocityZ);
+        _rb.velocity = new Vector3(_rb.velocity.x, _rb.velocity.y, clampZ);
+    }
     private void SetMaxSpeed(ItemType itemType, int value, int maxValue)
     {
         if (itemType != _itemType) return;

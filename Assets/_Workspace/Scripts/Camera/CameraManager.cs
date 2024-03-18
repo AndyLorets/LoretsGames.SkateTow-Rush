@@ -24,13 +24,15 @@ public class CameraManager : MonoBehaviour
     {
         GameManager.onFinish += ChangeToWaitCam;
         GameManager.onLose += ChangeToWaitCam; 
-        TimerManager.onTimeChanged += PostEffectTweening; 
+        //TimerManager.onTimeChanged += PostEffectTweening;
+        EmojiBehaviour.onEmoji += PostEffectTweening; 
     }
     private void OnDisable()
     {
         GameManager.onFinish -= ChangeToWaitCam;
         GameManager.onLose -= ChangeToWaitCam;
-        TimerManager.onTimeChanged -= PostEffectTweening;
+        //TimerManager.onTimeChanged -= PostEffectTweening;
+        EmojiBehaviour.onEmoji -= PostEffectTweening;
     }
     private void Awake()
     {
@@ -44,13 +46,20 @@ public class CameraManager : MonoBehaviour
 
         ChangeCam(cam_wait_name); 
     }
-    private void PostEffectTweening(bool f)
+    private void PostEffectTweening(bool active)
     {
-        if (!f) return; 
+        if (!active) return; 
 
         _postEffects.VignettEfffectTween();
         _postEffects.BloomEfffectTween();
         _postEffects.ColorGradingEfffectTween(); 
+    }
+    private void PostEffectTweening(string value, Sprite sprite)
+    {
+        _postEffects.VignettEfffectTween();
+        _postEffects.BloomEfffectTween();
+        _postEffects.ColorGradingEfffectTween();
+        AudioManager.PlayOneShot(AudioManager.SoundType.Swipe); 
     }
     public static void ChangeCam(string name)
     {

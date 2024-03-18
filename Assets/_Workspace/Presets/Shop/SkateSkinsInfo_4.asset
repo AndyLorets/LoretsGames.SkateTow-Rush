@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 5
   <PriceType>k__BackingField: 0
-  <Price>k__BackingField: 50
+  <Price>k__BackingField: 200
   <PriceIcon>k__BackingField: {fileID: 194516358, guid: a5e645d0b2507ac42807ef8e886f7d45,
     type: 3}
   <Texture>k__BackingField: {fileID: 2800000, guid: 0888b6b07c769b84498dcf64392e1d8b,

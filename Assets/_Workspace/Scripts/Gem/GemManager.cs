@@ -12,6 +12,7 @@ public static class GemManager
     {
         currentGemCount += value;
         onChangeValue?.Invoke(value, startPos);
+        AudioManager.PlayOneShot(AudioManager.SoundType.Picked);
     }
     public static void RemoveGem(int value)
     {

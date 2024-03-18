@@ -27,7 +27,7 @@ public class UIUpgradePrefab : UItemPrefabBase
         _pricelText.text = _item.Price.ToString();
 
         _priceIcon.sprite = _item.PriceIcon;
-        _currentValueText.text = _item.StartValue.ToString();
+        _currentValueText.text = $"{_item.UserValue} lvl";
 
         if (_item.StartValue >= _item.MaxValue)
             _buyBtn.interactable = false;
@@ -37,6 +37,8 @@ public class UIUpgradePrefab : UItemPrefabBase
         if (_item.StartValue < _item.MaxValue)
             ShopManager.Upgrade(_item, OnSuccess, OnFailed, _item.IncrimentValue, _item.MaxValue);
         else _buyBtn.interactable = false;
+
+        AudioManager.PlayOneShot(AudioManager.SoundType.Click); 
     }
     protected override void OnSuccess()
     {

@@ -12,14 +12,14 @@ public static class TimerManager
     private const float coroutine_update_time = .1f;
     private const ItemType item_type = ItemType.UpgradeTime; 
 
-    private static int _addTimeValue; 
+    public static int addTimeValue = 3; 
 
     public static void Init()
     {
         GameManager.onSaveAll += Save;
         GameManager.onFinish += GetFinishedLevel;
         ShopManager.OnUpgrade += SetAddTimeValue;
-        _addTimeValue = GameDataManager.UpgradeValue.GetValue(ItemConvertor.ConvertTitleFromType(item_type)); 
+        //addTimeValue =  GameDataManager.UpgradeValue.GetValue(ItemConvertor.ConvertTitleFromType(item_type)); 
     }
     public static void Init(int value)
     {
@@ -33,11 +33,11 @@ public static class TimerManager
         int lastValue = GameDataManager.UpgradeValue.GetValue(key);
         int endValue = Math.Clamp(lastValue + value, lastValue + value, maxValue);
         GameDataManager.UpgradeValue.SetValue(key, endValue);
-        _addTimeValue = GameDataManager.UpgradeValue.GetValue(key);
+        addTimeValue = GameDataManager.UpgradeValue.GetValue(key);
     }
     public static void AddTime()
     {
-        gameDeadLineTime += _addTimeValue;
+        gameDeadLineTime += addTimeValue;
         onTimeChanged?.Invoke(true);
     }
     private static void GetFinishedLevel() => _finishedLevel = GameDataManager.CurrentLevel;

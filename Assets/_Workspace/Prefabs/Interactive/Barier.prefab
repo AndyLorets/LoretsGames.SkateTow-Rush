@@ -801,11 +801,18 @@ MonoBehaviour:
     _loop: 1
     _duration: 1.1
     _endScale: {x: 1.3, y: 1.3, z: 1.3}
+  _playPosTweenAnimation: 0
+  _posTweenAnimation:
+    _loop: 0
+    _backToPos: 0
+    _duration: 0
+    _offset: {x: 0, y: 0, z: 0}
   _playLocPosTweenAnimation: 0
   _locPosTweenAnimation:
     _loop: 0
+    _backToPos: 0
     _duration: 0
-    _endPos: {x: 0, y: 0, z: 0}
+    _offset: {x: 0, y: 0, z: 0}
 --- !u!1001 &1962160395120525789
 PrefabInstance:
   m_ObjectHideFlags: 0

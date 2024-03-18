@@ -98,11 +98,13 @@ public class Player : MonoBehaviour, ITakeDamage
 
             onTrick?.Invoke();
             CameraManager.ChangeCam(CameraManager.cam_fly_name);
+            AudioManager.PlayOneShot(AudioManager.SoundType.Boost);
         }
     }
     private void Boost()
     {
         _rb.AddForce(Vector3.forward * _boostPower, ForceMode.VelocityChange);
+        AudioManager.PlayOneShot(AudioManager.SoundType.Boost);
     }
     public void SetRigibodyDrag(float value)
     {
@@ -116,6 +118,7 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     public void TakeDamage(float damage)
     {
+        AudioManager.PlayOneShot(AudioManager.SoundType.Damage);
         if (damage > damage_impact_speed)
             Die();
     }

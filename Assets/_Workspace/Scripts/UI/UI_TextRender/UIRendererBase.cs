@@ -24,8 +24,10 @@ public abstract class UIRendererBase : MonoBehaviour
 
         if(_isStatic)
             _text.enabled = true;
-
-        Regist(); 
+    }
+    private void Start()
+    {
+        Invoke(nameof(Regist), .1f); 
     }
     protected abstract void Regist(); 
     public virtual void RenderTxt(string text, Vector3 startPos = new Vector3())
@@ -40,10 +42,10 @@ public abstract class UIRendererBase : MonoBehaviour
         _rectTransform.DOKill();
         CancelInvoke(nameof(DeactiveAdded));
 
-        //float xRandom = Random.Range(_endPos.position.x - randomPos_offsetX, _endPos.position.x + randomPos_offsetX);
-        //float yRandom = Random.Range(_endPos.position.y - randomPos_offsetY, _endPos.position.y + randomPos_offsetY);
+        //float xRandom = Random.Range(_offset.position.x - randomPos_offsetX, _offset.position.x + randomPos_offsetX);
+        //float yRandom = Random.Range(_offset.position.y - randomPos_offsetY, _offset.position.y + randomPos_offsetY);
         Vector3 startScreenPosition = Camera.main.WorldToScreenPoint(startPos);
-        //Vector3 endRandomPos = new Vector3(xRandom, yRandom, _endPos.position.z);
+        //Vector3 endRandomPos = new Vector3(xRandom, yRandom, _offset.position.z);
 
         _rectTransform.position = startScreenPosition;
         _rectTransform.localScale = Vector3.zero;

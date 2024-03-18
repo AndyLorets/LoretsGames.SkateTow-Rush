@@ -111,6 +111,7 @@ MonoBehaviour:
   _boosters: {fileID: 8559572116017850128}
   _bariers: {fileID: 3452678988465973995}
   _pickeds: {fileID: 8124923001384314908}
+  _interactiveBariers: {fileID: 0}
   _finishEffects: {fileID: 6910591627461302787}
 --- !u!65 &8727045412827371043
 BoxCollider:
@@ -3410,7 +3411,7 @@ PrefabInstance:
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.3999996
+      value: -1.3000002
       objectReference: {fileID: 0}
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
@@ -14268,7 +14269,7 @@ PrefabInstance:
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.3000002
+      value: 5.3999996
       objectReference: {fileID: 0}
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
@@ -25092,7 +25093,7 @@ PrefabInstance:
     - target: {fileID: 1692249772883252771, guid: 75a1413b21dab1f4996d884cae3259c0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.3999996
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 1692249772883252771, guid: 75a1413b21dab1f4996d884cae3259c0,
         type: 3}

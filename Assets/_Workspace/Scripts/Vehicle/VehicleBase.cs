@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class VehicleBase : MonoBehaviour
 {
-    private Vector3 _startLocalPos; 
-
+    private Vector3 _startLocalPos;
     protected virtual void Start()
     {
         Construct();

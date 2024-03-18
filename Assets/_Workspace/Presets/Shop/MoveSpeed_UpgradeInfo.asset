@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 0
   <PriceType>k__BackingField: 1
-  <Price>k__BackingField: 10
+  <Price>k__BackingField: 15
   <PriceIcon>k__BackingField: {fileID: -1245454884, guid: a5e645d0b2507ac42807ef8e886f7d45,
     type: 3}
   <Art>k__BackingField: {fileID: 21300000, guid: b24fc313a4206874488fdf5f2d5c8309,
     type: 3}
-  _coefficientPriceAfterSell: 2
-  <IncrimentValue>k__BackingField: 5
   <StartValue>k__BackingField: 45
   <MaxValue>k__BackingField: 65
+  <IncrimentValue>k__BackingField: 2
+  <IncrimentPrice>k__BackingField: 15

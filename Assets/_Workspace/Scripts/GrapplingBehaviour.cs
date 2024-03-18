@@ -10,7 +10,9 @@ public static class GrapplingBehaviour
     {
         _grappleTransform = grappleTransform;
         _grappleOffset = offset;
-        isGrappling = true; 
+        isGrappling = true;
+
+        AudioManager.PlayOneShot(AudioManager.SoundType.Grapple); 
     }
     public static Vector3 GetDirection()
     {

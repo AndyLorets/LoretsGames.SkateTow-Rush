@@ -13,18 +13,35 @@ public class LevelContanier : MonoBehaviour
     [SerializeField] private GameObject _boosters;
     [SerializeField] private GameObject _bariers;
     [SerializeField] private GameObject _pickeds;
+    [SerializeField] private GameObject _interactiveBariers; 
     [Space(10)]
     [SerializeField] private ParticleSystem _finishEffects;
 
-    public void SetActiveInteractiveObjects(bool hasJumper, bool hasBooster, bool hasBarier, bool hasAirplanes, bool hasPicked, bool checkPoint)
+    public void SetActiveInteractiveObjects(bool hasJumper, bool hasBooster, bool hasBarier, bool interactiveBarier, bool hasAirplanes, bool hasPicked, bool checkPoint)
     {
-        _finish.SetActive(isFinishContanier);
-        _airplanes.SetActive(hasAirplanes);
-        _checkPoint.SetActive(checkPoint);
-        _jumpers.SetActive(hasJumper);
-        _boosters.SetActive(hasBooster);
-        _bariers.SetActive(hasBarier);
-        _pickeds.SetActive(hasPicked);
+        if (_finish != null)
+            _finish.SetActive(isFinishContanier);
+
+        if (_airplanes != null)
+            _airplanes.SetActive(hasAirplanes);
+
+        if (_checkPoint != null)
+            _checkPoint.SetActive(checkPoint);
+
+        if (_jumpers != null)
+            _jumpers.SetActive(hasJumper);
+
+        if (_boosters != null)
+            _boosters.SetActive(hasBooster);
+
+        if (_bariers != null)
+            _bariers.SetActive(hasBarier);
+
+        if (_interactiveBariers != null)
+            _interactiveBariers.SetActive(interactiveBarier);
+
+        if (_pickeds != null)
+            _pickeds.SetActive(hasPicked);
     }
 
     private void OnTriggerEnter(Collider other)

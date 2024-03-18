@@ -52,6 +52,7 @@ public class UISkinPrefab : UItemPrefabBase
     public override void Button()
     {
         ShopManager.SetSkin(_item, OnSuccess, OnFailed);
+        AudioManager.PlayOneShot(AudioManager.SoundType.Click); 
     }
     protected override void OnSuccess()
     {

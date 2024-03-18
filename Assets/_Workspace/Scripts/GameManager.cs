@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private UIMoveTween[] _hideOnStartUIMoveTweens; 
+    [SerializeField] private UIMoveTween[] _hideOnStartUIMoveTweens;
+    [SerializeField] private Button _upgradeButton; 
+    
 
     public static Action onFinish;
     public static Action onLose;
@@ -36,6 +39,13 @@ public class GameManager : MonoBehaviour
     {
         InitializeAll();
         StartCoroutine(SetFrameRate(framerate_value));
+        Invoke(nameof(ShowUpgrades), .5f); 
+    }
+    private void ShowUpgrades()
+    {
+        if (GameDataManager.CurrentLevel == 0) return; 
+
+        _upgradeButton.onClick.Invoke(); 
     }
     private void SetDebbugState()
     {
@@ -54,8 +64,11 @@ public class GameManager : MonoBehaviour
             _hideOnStartUIMoveTweens[i].Hide();
         }
     }
-    public static void StartGame()
+    public void StartGame()
     {
+        if (isGameStart || isGameOver) 
+            return; 
+
         onGameStarted?.Invoke();
         isGameStart = true;
 

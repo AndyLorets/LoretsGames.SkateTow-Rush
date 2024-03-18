@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CheckSpeed : MonoBehaviour
+public class EmojiBehaviour : MonoBehaviour
 {
     [SerializeField] private RectTransform _rect;
     [Space(10)]
@@ -13,7 +13,7 @@ public class CheckSpeed : MonoBehaviour
     [SerializeField] private Image _image;
     [SerializeField] private Sprite[] _emoji;
 
-    public static System.Action<string, Sprite> onEmoji; 
+    public static System.Action<string, Sprite> onEmoji;
 
     private bool _isChanged; 
 
@@ -43,8 +43,6 @@ public class CheckSpeed : MonoBehaviour
             _isChanged = true;
             OnSpeedChange?.Invoke();
 
-            TimerManager.AddTime(); 
-
             EnableCanvas(); 
         }
     }
@@ -55,9 +53,8 @@ public class CheckSpeed : MonoBehaviour
         _rect.DOScale(Vector3.one * 1.1f, tween_duration)
             .OnComplete(() => _rect.DOScale(Vector3.one, tween_duration * .5f));
 
-        int re = Random.Range(0, _emoji.Length);
         _text.text = _currentLanguageText.GetTextRandom();
-        _image.sprite = _emoji[re];
+        _image.sprite = _emoji[Random.Range(0, _emoji.Length)];
 
         onEmoji?.Invoke(_text.text, _image.sprite); 
 
