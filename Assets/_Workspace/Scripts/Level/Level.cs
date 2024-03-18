@@ -4,6 +4,9 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     [SerializeField, Min(5)] private int _startLevelTime = 15;
+    [SerializeField, Min(20)] private int _carsSpeed = 20;
+    [SerializeField] private Transform _carsParent; 
+    private Car[] _cars;
     [field: SerializeField] public LevelTimeInfo LevelTimeInfo { get; private set; }
     [Space(7)]
     [SerializeField] private Transform _levelContaniersParent;
@@ -20,6 +23,7 @@ public class Level : MonoBehaviour
     private void Start()
     {
         TimerManager.Init(_startLevelTime);
+        ConstructCars();
         ConstructLevelContaniers();
 
         if (_levelContaniersInfo.Length % 2 == 0 && GameManager.DEBBUG_WARNINGLOG)
@@ -51,6 +55,15 @@ public class Level : MonoBehaviour
             levelContanier.SetActiveInteractiveObjects(_levelContaniersInfo[i].HasJumper, _levelContaniersInfo[i].HasBooster,
                 _levelContaniersInfo[i].HasBarier, _levelContaniersInfo[i].HasAirplane, _levelContaniersInfo[i].HasPicked, !notHaveCheckPoint);
             _levelContanierList.Add(levelContanier);
+        }
+    }
+    private void ConstructCars()
+    {
+        _cars = new Car[_carsParent.childCount]; 
+        for (int i = 0; i < _cars.Length; i++)
+        {
+            _cars[i] = _carsParent.GetChild(i).GetComponent<Car>();
+            _cars[i].speed = _carsSpeed; 
         }
     }
     private void CheckPoint()

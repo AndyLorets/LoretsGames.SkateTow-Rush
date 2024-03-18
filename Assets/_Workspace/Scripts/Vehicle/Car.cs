@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Car : VehicleBase
 {
-    [SerializeField] protected float _speed = 5f;
     [SerializeField] private Transform _skinsParent;
 
     private GameObject[] _skins;
-    private BoxCollider _collder; 
+    private BoxCollider _collder;
+    public float speed { get; set; } = 20f;
     public float maxPosZ { private get; set; }
 
     protected override void Construct()
@@ -29,7 +29,7 @@ public class Car : VehicleBase
 
     protected virtual void FixedUpdate()
     {
-        transform.Translate(Vector3.forward * _speed * Time.deltaTime);
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
     protected virtual void Update()
     {
