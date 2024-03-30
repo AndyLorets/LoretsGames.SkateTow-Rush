@@ -35,27 +35,33 @@ public class SceneLoader : MonoBehaviour
     }
     private IEnumerator SceneLoading(bool renderDiscriptions = false)
     {
-        if (renderDiscriptions)
-        {
-            List<string> discriptionsList = new List<string>();
-            for (int i = 0; i < _discriptions.Length; i++)
-                discriptionsList.Add(_discriptions[i]);
+        //if (renderDiscriptions)
+        //{
+        //    List<string> discriptionsList = new List<string>();
+        //    for (int i = 0; i < _discriptions.Length; i++)
+        //        discriptionsList.Add(_discriptions[i]);
 
-            RenderDiscription(ref discriptionsList);
+        //    RenderDiscription(ref discriptionsList);
 
-            yield return new WaitForSeconds(_timePreview);
+        //    yield return new WaitForSeconds(_timePreview);
 
-            RenderDiscription(ref discriptionsList);
-        }
-        else
-            yield return new WaitForSeconds(GameManager.nextLevel_fade_duration);
+        //    RenderDiscription(ref discriptionsList);
+        //}
+        //else
+        //    yield return new WaitForSeconds(GameManager.nextLevel_fade_duration);
 
         AsyncOperation async = SceneManager.LoadSceneAsync(gameScene_id);
 
         while (_discriptionText.enabled)
         {
             if (async.isDone)
-                _discriptionText.enabled = false;
+            {
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    transform.GetChild(i).gameObject.SetActive(false); 
+                }
+            }    
+
             //float progress = async.progress;
             //if (_loadImage != null && progress >= .3f) _loadImage.fillAmount = progress;
             yield return null;

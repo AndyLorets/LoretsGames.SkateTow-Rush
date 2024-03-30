@@ -12,13 +12,13 @@ public class UIGameTimeRenderer : UIRendererBase
     {
         base.Awake();
 
-        GameManager.onGameStarted += Show;
+        GameManager.onGameStart += Show;
         GameManager.onFinish += Hide;
         GameManager.onLose += Hide;
     }
     private void OnDestroy()
     {
-        GameManager.onGameStarted -= Show;
+        GameManager.onGameStart -= Show;
         GameManager.onFinish -= Hide;
         GameManager.onLose -= Hide;
     }

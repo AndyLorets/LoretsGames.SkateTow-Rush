@@ -21,7 +21,7 @@ public class PickedItem : MonoBehaviour
 
         if (randomNumber < 2)
             r = 2;
-        else if (randomNumber < 4)
+        else if (randomNumber < 6)
             r = 1;
         else
             r = 0;

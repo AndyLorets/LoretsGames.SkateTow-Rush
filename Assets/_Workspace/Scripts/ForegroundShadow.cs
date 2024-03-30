@@ -19,13 +19,12 @@ public class ForegroundShadow : MonoBehaviour
     private void Construct()
     {
         _image = GetComponent<Image>();
-        SetFirstColor(); 
-
+        _image.enabled = true;
+        _image.color = _color;
+        Invoke(nameof(SetFirstColor), 1f);  
     }
     private void SetFirstColor()
     {
-        _image.enabled = true; 
-        _image.color = _color;
         _image.DOColor(Color.clear, GameManager.nextLevel_fade_duration)
             .OnComplete(() => _image.enabled = false);
     }

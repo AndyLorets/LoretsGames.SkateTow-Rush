@@ -1,22 +1,35 @@
+using DG.Tweening;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour, ITakeDamage
 {
     [Header("Parameters")]
     [SerializeField, Range(5, 25)] private int _jumpPower = 10;
-    [SerializeField, Range(1, 10)] private int _boostPower = 10;
+    [SerializeField, Range(80, 120)] private int _boostSpeed = 100;
     [SerializeField] private LayerMask _groundLayer; 
+    [Space(10)]
+    [SerializeField, Range(5, 15)] private float _clampVelocityX = 10;
+    [SerializeField, Range(50, 60)] private float _clampVelocityY = 55;
+    [SerializeField, Range(50, 70)] private float _clampVelocityZ = 60;
 
     private Rigidbody _rb;
+    private Collider _col; 
     private PlayerAnimationsController _animations;
 
     [Header("Components"), Space(10)]
     [SerializeField] private Rigidbody[] _ragdollRb;
     [SerializeField] private Collider[] _ragdollCol;
 
+    private bool _isAlive = false;
+    private bool _isJump = true;
+    private bool _isBoost;
 
-    private const float damage_impact_speed = 40f; 
+    private const float damage_impact_speed = 40f;
+    private const float boost_delay = 1.5f;
+    private const float alive_delay = 3f;
+    private const float min_yPos = 1.15f;
     private float _velocitySpeed => _rb.velocity.magnitude;
     public int SpeedScore => Mathf.RoundToInt(_velocitySpeed);
     private bool RayIsGround => Physics.Raycast(transform.position, Vector3.down, 3f, _groundLayer);
@@ -29,6 +42,8 @@ public class Player : MonoBehaviour, ITakeDamage
     public Action OnLanding;
     public Action onDestroy;
 
+    private Tweener _boostTween;
+
     private void Awake()
     {
         Initialize();
@@ -39,11 +54,13 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     private void OnEnable()
     {
-        GameManager.onFinish += SetFinishParameters; 
+        GameManager.onFinish += SetFinishParameters;
+        GameManager.onGameStart += FirstMoveStarter; 
     }
     private void OnDisable()
     {
         GameManager.onFinish -= SetFinishParameters;
+        GameManager.onGameStart -= FirstMoveStarter;
     }
 
     private void OnDestroy()
@@ -57,13 +74,17 @@ public class Player : MonoBehaviour, ITakeDamage
     private void Construct()
     {
         _rb = GetComponent<Rigidbody>();
+        _col = GetComponent<Collider>();    
         _animations = new PlayerAnimationsController(this, transform.GetChild(0).GetComponent<Animator>());
-        
+
+        _isAlive = false;
+
         SetRagdollState(false);
     }
     private void Update()
     {
-        if (!GameManager.isGameStart) return;
+        if (!GameManager.isGameStart) 
+            return;
 
         if (RayIsGround && !onGround)
         {
@@ -82,11 +103,29 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     void FixedUpdate()
     {
-        if (transform.position.y < 1) 
-            transform.position = new Vector3(transform.position.x, 1, transform.position.z);
+        if (transform.position.y < min_yPos)
+            transform.position = new Vector3(transform.position.x, min_yPos, transform.position.z);
+        else if (!_isJump && transform.position.y > min_yPos)
+            transform.position = new Vector3(transform.position.x, min_yPos, transform.position.z);
+
+        if (!GameManager.isGameStart)
+            return;
+
+        ClampVelocity(); 
+    }
+    private void FirstMoveStarter()
+    {
+        Boost();
+        Invoke(nameof(Alive), alive_delay);
+    }
+    private void Alive()
+    {
+        _isAlive = true;
     }
     private void Jump(Collision other)
     {
+        _isJump = true; 
+
         Jumper jumper = other.gameObject.GetComponent<Jumper>();
         if (jumper != null)
         {
@@ -103,9 +142,43 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     private void Boost()
     {
-        _rb.AddForce(Vector3.forward * _boostPower, ForceMode.VelocityChange);
+        _boostTween?.Kill();
+        _isBoost = false; 
+        StopCoroutine(nameof(BoostActivity));
+        StartCoroutine(nameof(BoostActivity)); 
         AudioManager.PlayOneShot(AudioManager.SoundType.Boost);
     }
+    private IEnumerator BoostActivity()
+    {
+        _isBoost = true;
+        float currentVelZ = _rb.velocity.z;
+
+        _boostTween = DOTween.To(() => currentVelZ, x => currentVelZ = x, _boostSpeed, boost_delay)
+            .OnComplete(delegate ()
+            {
+                DOTween.To(() => currentVelZ, x => currentVelZ = x, _clampVelocityZ, boost_delay)
+                .OnComplete(() => _isBoost = false);
+            }); 
+
+        while (_isBoost)
+        {
+            _rb.velocity = new Vector3(_rb.velocity.x, _rb.velocity.y, currentVelZ);
+            yield return null; 
+        }
+    }
+    private void ClampVelocity()
+    {
+        if (_isBoost) return;
+
+        float clampX = _rb.velocity.x;
+        clampX = Mathf.Clamp(clampX, -_clampVelocityX, _clampVelocityX);
+        float clampY = _rb.velocity.y;
+        clampY = Mathf.Clamp(clampY, -_clampVelocityY, _clampVelocityY);
+        float clampZ = _rb.velocity.z;
+        clampZ = Mathf.Clamp(clampZ, -4, _clampVelocityZ);
+        _rb.velocity = new Vector3(clampX, clampY, clampZ);
+    }
+
     public void SetRigibodyDrag(float value)
     {
         _rb.drag += value;
@@ -115,9 +188,14 @@ public class Player : MonoBehaviour, ITakeDamage
     private void SetFinishParameters()
     {
         _rb.drag = 2;
+        _boostTween?.Kill();
+        _isBoost = false;
+        StopCoroutine(nameof(BoostActivity));
     }
     public void TakeDamage(float damage)
     {
+        if (!_isAlive) return; 
+
         AudioManager.PlayOneShot(AudioManager.SoundType.Damage);
         if (damage > damage_impact_speed)
             Die();
@@ -146,14 +224,6 @@ public class Player : MonoBehaviour, ITakeDamage
     #endregion
 
     #region Collisions
-    private void OnTriggerEnter(Collider other)
-    {
-        //if (other.CompareTag(ObjTags.collect_tag))
-        //    Destroy(other.gameObject);
-
-        //if (other.CompareTag(ObjTags.trick_tag))
-        //    onTrick?.Invoke(); 
-    }
 
     private void OnCollisionEnter(Collision other)
     {
@@ -162,8 +232,11 @@ public class Player : MonoBehaviour, ITakeDamage
 
         if (other.gameObject.CompareTag(ObjTags.damage_tag))
             TakeDamage(other.relativeVelocity.magnitude);
+
+        if (other.gameObject.CompareTag(ObjTags.ground_tag) && _isJump)
+            _isJump = false;
     }
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(ObjTags.boost_tag))
             Boost();

@@ -8,6 +8,7 @@ TagManager:
   - Boost
   - Collect
   - Damage
+  - Ground
   layers:
   - Default
   - TransparentFX

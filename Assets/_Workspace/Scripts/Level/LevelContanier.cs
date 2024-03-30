@@ -43,6 +43,11 @@ public class LevelContanier : MonoBehaviour
         if (_pickeds != null)
             _pickeds.SetActive(hasPicked);
     }
+    public void Construct()
+    {
+        if (isFinishContanier)
+            ServiceLocator.GetService<LevelManager>().FinishTransform = _finish.transform;
+    }
 
     private void OnTriggerEnter(Collider other)
     {

@@ -27,7 +27,7 @@ public class UITimerRenderer : UIRendererBase
 
         if (_isStatic)
         {
-            GameManager.onGameStarted += Show;
+            GameManager.onGameStart += Show;
             GameManager.onFinish += Hide;
             GameManager.onLose += Hide;
         }
@@ -37,7 +37,7 @@ public class UITimerRenderer : UIRendererBase
     {
         if (_isStatic)
         {
-            GameManager.onGameStarted -= Show;
+            GameManager.onGameStart -= Show;
             GameManager.onFinish -= Hide;
             GameManager.onLose -= Hide;
         }

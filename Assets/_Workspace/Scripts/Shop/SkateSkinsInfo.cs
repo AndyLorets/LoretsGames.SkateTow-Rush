@@ -32,7 +32,6 @@ public class SkateSkinsInfo : ItemInfoBase
         if (!GameDataManager.SkinAvable.ContainsKey(ItemConvertor.ConvertTitleFromType(Type)))
         {
             GameDataManager.SkinAvable.SetValue(ItemConvertor.ConvertTitleFromType(Type), Avable);
-            PlayerPrefs.SetInt("FFF", PlayerPrefs.GetInt("FFF") + 1);
         }
 
         if (Avable)

@@ -6,4 +6,5 @@ public static class ObjTags
     public const string finish_tag = "Finish";
     public const string collect_tag = "Collect";
     public const string damage_tag = "Damage";
+    public const string ground_tag = "Ground";
 }

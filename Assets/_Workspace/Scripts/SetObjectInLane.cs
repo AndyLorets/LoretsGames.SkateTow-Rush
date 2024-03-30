@@ -7,8 +7,8 @@ public class SetObjectInLane : MonoBehaviour
 
     private const int min_line_count = 1;
     private const int max_line_count = 4;
-    private const float start_line_posX = -8; 
-    private const float dist_btwn_lane = 6.7f;
+    private const float start_line_posX = -5f;//-8;
+    private const float dist_btwn_lane = 5f;//6.7f;
 
     private void Start()
     {

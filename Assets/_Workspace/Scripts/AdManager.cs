@@ -3,11 +3,17 @@ using UnityEngine;
 
 public static class AdManager 
 {
-    public const string MONEY_250_REWARD = "MONEY_250_REWARD"; 
+    private static float _interNextShowTime; 
 
+    public const string REWARD_100 = "REWARD_100";
+    private const float INTER_COOLDOWN = 60; 
     public static void ShowFullScreen()
     {
+        bool canShowInter = Time.time >= _interNextShowTime; 
+        if (!canShowInter) return; 
+
         GP_Ads.ShowFullscreen(OnFullscreenStart, OnFullscreenClose);
+        _interNextShowTime = Time.time + INTER_COOLDOWN;
     }
     public static void ShowReward(string rewardName)
     {
@@ -17,8 +23,10 @@ public static class AdManager
     {
         switch(rewardName)
         {
-            case MONEY_250_REWARD: 
-                MoneyManager.Add(250); 
+            case REWARD_100: 
+                MoneyManager.Add(100);
+                GemManager.AddGem(100, Vector2.zero);
+                GameManager.SaveAll(); 
                 break; 
         }
     }

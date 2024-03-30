@@ -35,7 +35,7 @@ public class AudioManager : MonoBehaviour
     }
     private void Awake()
     {
-        GameManager.onGameStarted += PlayGameMusic;
+        GameManager.onGameStart += PlayGameMusic;
         GameManager.onFinish += PlayFinishMusic;
         GameManager.onLose += PlayLoseSound;
 
@@ -82,7 +82,7 @@ public class AudioManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        GameManager.onGameStarted -= PlayGameMusic;
+        GameManager.onGameStart -= PlayGameMusic;
         GameManager.onFinish -= PlayFinishMusic;
         GameManager.onLose -= PlayLoseSound;
     }

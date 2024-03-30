@@ -44,14 +44,15 @@ public class Level : MonoBehaviour
             if (_levelContanierList.Count > 0)
             { 
                 levelContanierObj.transform.localPosition = new Vector3(0, 0, _levelContanierList[i - 1].transform.position.z + _contanierOffset);
-                if(i > 1)
-                    levelContanierObj.SetActive(false);
+                //if(i > 1)
+                //    levelContanierObj.SetActive(false);
             }
 
             LevelContanier levelContanier = levelContanierObj.GetComponent<LevelContanier>();
             bool notHaveCheckPoint = i % Interval_ÑheckPointCallCount == 0; 
             levelContanier.isFinishContanier = i == _levelContaniersInfo.Length - 1 ? true : false;
             levelContanier.onLevelEnter += CheckPoint;
+            levelContanier.Construct();
             levelContanier.SetActiveInteractiveObjects(_levelContaniersInfo[i].HasJumper, _levelContaniersInfo[i].HasBooster,
                 _levelContaniersInfo[i].HasBarier, _levelContaniersInfo[i].HasInteractiveBarier, _levelContaniersInfo[i].HasAirplane, _levelContaniersInfo[i].HasPicked, !notHaveCheckPoint);
             _levelContanierList.Add(levelContanier);
@@ -72,7 +73,7 @@ public class Level : MonoBehaviour
         if (_checkPointCallCount % Interval_ÑheckPointCallCount == 0)
             TimerManager.AddTime();
 
-        EnableNearRoads();
+        //EnableNearRoads();
     }
     private void EnableNearRoads()
     {

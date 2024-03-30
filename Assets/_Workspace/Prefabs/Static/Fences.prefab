@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2984809812653082190}
   m_Layer: 0
   m_Name: HookPos (2)
-  m_TagString: Damage
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 6615386063383363510}
   m_Layer: 0
   m_Name: HookPos (1)
-  m_TagString: Damage
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 1957927756217065469}
   m_Layer: 0
   m_Name: HookPos
-  m_TagString: Damage
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 2327252689589681110}
   m_Layer: 0
   m_Name: HookPos (4)
-  m_TagString: Damage
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 7544584236007550603}
   m_Layer: 0
   m_Name: HookPos (3)
-  m_TagString: Damage
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647

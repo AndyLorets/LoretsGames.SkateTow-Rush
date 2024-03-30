@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private Transform _levelsParent; 
+    [SerializeField] private Transform _levelsParent;
+    public Transform FinishTransform { get; set; } 
 
     private Level[] _levels;
-    private int _currentLevel; 
+    private int _currentLevel;
 
     private void Awake()
     {
@@ -33,8 +34,6 @@ public class LevelManager : MonoBehaviour
             if (GameManager.DEBBUG_WARNINGLOG)
                 Debug.LogWarning("Number of levels does not match the constant in <color=green>GameDataLoader</color>\"");
         }
-
-
     }
     private void Init()
     {

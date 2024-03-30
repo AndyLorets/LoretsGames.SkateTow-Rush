@@ -96,7 +96,7 @@ Material:
     - _NormalsSource: 0
     - _NormalsUVType: 0
     - _OcclusionStrength: 1
-    - _OutlineWidth: 2
+    - _OutlineWidth: 4
     - _Parallax: 0.02
     - _RampSmoothing: 0.1
     - _RampThreshold: 0.5
@@ -113,7 +113,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0.3184078, b: 0.50735295, a: 1}
     - _FakeLightDir: {r: 0.85, g: -0.27, b: -0.89, a: 0}
     - _HColor: {r: 0.9852941, g: 0.9852941, b: 0.9852941, a: 1}
-    - _HologramColor: {r: 0, g: 1.3568628, b: 1.8039216, a: 1}
+    - _HologramColor: {r: 1.8039216, g: 1.6007833, b: 0, a: 1}
     - _MainLightDirection: {r: 0, g: 1, b: -1.72, a: 0}
     - _OutlineColorVertex: {r: 0, g: 0.5034485, b: 1, a: 1}
     - _SColor: {r: 0, g: 0, b: 0, a: 1}

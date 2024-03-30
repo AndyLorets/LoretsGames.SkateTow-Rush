@@ -1,3 +1,4 @@
+using GamePush;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -6,14 +7,16 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private UIMoveTween[] _hideOnStartUIMoveTweens;
-    [SerializeField] private Button _upgradeButton; 
-    
+    [SerializeField] private UIMoveTween _pauseTween;
+    [SerializeField] private UIMoveTween _pauseBtnTween;
+    [SerializeField] private Image _pauseBG; 
+    [SerializeField] private Button _upgradeButton;     
 
     public static Action onFinish;
     public static Action onLose;
     public static Action onNextLevel;
     public static Action onRestart;
-    public static Action onGameStarted;
+    public static Action onGameStart;
     public static Action onSaveAll;
     public static bool isGameOver { get; private set; }
     public static bool isGameStart { get; private set; }
@@ -33,13 +36,39 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Missing <color=green>SceneLoader</color> component! Try running the game from the <color=black>Load_Scene</color>.");
 
         ServiceLocator.RegisterService(this);
-        onGameStarted += HideTweens;
+        onGameStart += HideTweens;
+    }
+    private void OnEnable()
+    {
+        GP_Game.OnPause += Pause;
+        GP_Game.OnResume += Resume;
+    }
+    private void OnDisable()
+    {
+        GP_Game.OnPause -= Pause;
+        GP_Game.OnResume -= Resume;
     }
     private void Start()
     {
         InitializeAll();
         StartCoroutine(SetFrameRate(framerate_value));
         Invoke(nameof(ShowUpgrades), .5f); 
+    }
+    public void Pause()
+    {
+        Time.timeScale = 0; 
+        AudioListener.pause = true;
+        _pauseBG.enabled = true;
+        _pauseTween.Show();
+        _pauseBtnTween.Hide(); 
+    }
+    public void Resume()
+    {
+        Time.timeScale = 1;
+        AudioListener.pause = false;
+        _pauseBG.enabled = false;
+        _pauseTween.Hide();
+        _pauseBtnTween.Show(); 
     }
     private void ShowUpgrades()
     {
@@ -69,11 +98,12 @@ public class GameManager : MonoBehaviour
         if (isGameStart || isGameOver) 
             return; 
 
-        onGameStarted?.Invoke();
+        onGameStart?.Invoke();
         isGameStart = true;
 
-        GameManager gameManager = ServiceLocator.GetService<GameManager>();
-        gameManager?.StartCoroutine(TimerManager.GameTimer());
+        _pauseBtnTween.Show();
+
+        StartCoroutine(TimerManager.GameTimer());
 
         CameraManager.ChangeCam(CameraManager.cam_game_name);
 
@@ -135,7 +165,7 @@ public class GameManager : MonoBehaviour
 
         AdManager.ShowFullScreen();
     }
-    private static void SaveAll()
+    public static void SaveAll()
     {
         onSaveAll?.Invoke();
         GameDataManager.Save();
@@ -164,7 +194,7 @@ public class GameManager : MonoBehaviour
         UIGemRenderController.Reset();
         UITimerRenderController.Reset();
 
-        onGameStarted -= HideTweens;
+        onGameStart -= HideTweens;
 
         if (DEBBUG_LOG)
             Debug.Log("Reset All"); 

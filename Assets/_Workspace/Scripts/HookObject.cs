@@ -19,7 +19,7 @@ public class HookObject : MonoBehaviour
     }
     //private void Construct()
     //{
-    //    _player = ServiceLocator.GetService<Player>();
+    //    _pointA = ServiceLocator.GetService<Player>();
     //    _playerHookController = ServiceLocator.GetService<PlayerHookController>();
     //    //if (_prefabAfterHooking)
     //    //    _getPrefabAfterHooking.ConstructLevelContaniers(this); 
@@ -28,7 +28,7 @@ public class HookObject : MonoBehaviour
     //{
     //    if (CanHook)
     //    {
-    //        //_playerHookController.SetHookObje(transform);
+    //        //_playerHookController.SetHook(transform);
     //    }
     //}
     //private void OnMouseUp()

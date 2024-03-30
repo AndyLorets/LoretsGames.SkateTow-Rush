@@ -66,6 +66,7 @@ public class UISkinPrefab : UItemPrefabBase
     {
         base.OnFailed();
 
+        ServiceLocator.GetService<UIAds>().Show(); 
         Debug.Log($"Sell <color=yellow>{ItemConvertor.ConvertTitleFromType(_item.Type)}</color> <color=#FF3600>Failed!</color>!");
     }
 }

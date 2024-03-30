@@ -26,11 +26,11 @@ public struct ItemConvertor
         {
             case ItemType.UpgradeMoveSpeed: return $"Move Speed";
             case ItemType.UpgradeTime: return $"Upgrade Time";
-            case ItemType.SkinSkate_1: return $"Skate Skin 1";
-            case ItemType.SkinSkate_2: return $"Skate Skin 2";
-            case ItemType.SkinSkate_3: return $"Skate Skin 3";
-            case ItemType.SkinSkate_4: return $"Skate Skin 4";
-            case ItemType.SkinSkate_5: return $"Skate Skin 5";
+            case ItemType.SkinSkate_1: return $"Skin 1";
+            case ItemType.SkinSkate_2: return $"Skin 2";
+            case ItemType.SkinSkate_3: return $"Skin 3";
+            case ItemType.SkinSkate_4: return $"Skin 4";
+            case ItemType.SkinSkate_5: return $"Skin 5";
         }
         return "";
     }
