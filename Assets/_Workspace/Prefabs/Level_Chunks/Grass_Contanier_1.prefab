@@ -1331,6 +1331,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Building_Cafe
       objectReference: {fileID: 0}
+    - target: {fileID: 2330861846578600767, guid: 9ef17eeef65acd24aa563f8a2d68f73c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2369691555464267691, guid: 9ef17eeef65acd24aa563f8a2d68f73c,
         type: 3}
       propertyPath: m_IsActive
@@ -1637,7 +1642,7 @@ PrefabInstance:
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
@@ -1842,7 +1847,7 @@ PrefabInstance:
     - target: {fileID: 1118700101614000830, guid: d4ecf01f12dd32242a068facc91096fc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.4932823
+      value: 6.5067177
       objectReference: {fileID: 0}
     - target: {fileID: 1118700101614000830, guid: d4ecf01f12dd32242a068facc91096fc,
         type: 3}
@@ -2528,7 +2533,7 @@ PrefabInstance:
     - target: {fileID: 6481496376233280801, guid: 68f368dd793b3f04b9e81fc06c711c2c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2607770576726469551, guid: 68f368dd793b3f04b9e81fc06c711c2c, type: 3}
@@ -6243,7 +6248,7 @@ PrefabInstance:
     - target: {fileID: 8010463409950369136, guid: c232dd35091d6d54e9a7288ed88f0de3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5067177
+      value: -3.4932823
       objectReference: {fileID: 0}
     - target: {fileID: 8010463409950369136, guid: c232dd35091d6d54e9a7288ed88f0de3,
         type: 3}
@@ -7368,7 +7373,7 @@ PrefabInstance:
     - target: {fileID: 1692249772883252771, guid: 75a1413b21dab1f4996d884cae3259c0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.487583
+      value: 5.512417
       objectReference: {fileID: 0}
     - target: {fileID: 1692249772883252771, guid: 75a1413b21dab1f4996d884cae3259c0,
         type: 3}
@@ -8080,7 +8085,7 @@ PrefabInstance:
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 225062656651729404, guid: c0e53bf37304df14e806d411d72ef8fb,
         type: 3}
@@ -9309,7 +9314,7 @@ PrefabInstance:
     - target: {fileID: 1692249772883252771, guid: 75a1413b21dab1f4996d884cae3259c0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.487583
+      value: 5.512417
       objectReference: {fileID: 0}
     - target: {fileID: 1692249772883252771, guid: 75a1413b21dab1f4996d884cae3259c0,
         type: 3}
@@ -9985,6 +9990,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Barrier_Car
       objectReference: {fileID: 0}
+    - target: {fileID: 4047227154066998402, guid: 902bd00905f0ead43be0adacf984ac47,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4047227154067167394, guid: 902bd00905f0ead43be0adacf984ac47,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10587,6 +10597,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Building_Cafe (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2330861846578600767, guid: 9ef17eeef65acd24aa563f8a2d68f73c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
