@@ -76,14 +76,14 @@ public class GameManager : MonoBehaviour
 
         _upgradeButton.onClick.Invoke(); 
     }
-    private void SetDebbugState()
+    private void SetDebbugState(bool state = false)
     {
 #if UNITY_EDITOR
         return;
 #else
-    DEBBUG_LOG = false;
-    DEBBUG_WARNINGLOG = false;
-    DEBBUG_ERRORLOG = false;
+    DEBBUG_LOG = state;
+    DEBBUG_WARNINGLOG = state;
+    DEBBUG_ERRORLOG = state;
 #endif
     }
     private void HideTweens()

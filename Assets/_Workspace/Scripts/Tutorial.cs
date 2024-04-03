@@ -11,11 +11,19 @@ public class Tutorial : MonoBehaviour
     private Color _bgColor;
     private int _currentPage; 
 
-    private const float tween_duration = 1f; 
+    private const float tween_duration = 1f;
+    private const string prefs_name = "Tutorial"; 
 
     void Start()
     {
-        Construct(); 
+        Construct();
+
+        bool hasSave = PlayerPrefs.HasKey(prefs_name); 
+        if (!hasSave)
+        {
+            Invoke(nameof(Show), 2f);
+            PlayerPrefs.SetInt(prefs_name, 1); 
+        }
     }
     private void Construct()
     {

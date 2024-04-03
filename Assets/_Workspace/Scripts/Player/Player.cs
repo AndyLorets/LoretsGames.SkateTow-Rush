@@ -43,6 +43,7 @@ public class Player : MonoBehaviour, ITakeDamage
     public Action onDestroy;
 
     private Tweener _boostTween;
+    private Tweener _returtBoostTween;
 
     private void Awake()
     {
@@ -142,9 +143,7 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     private void Boost()
     {
-        _boostTween?.Kill();
-        _isBoost = false; 
-        StopCoroutine(nameof(BoostActivity));
+        _isBoost = false;
         StartCoroutine(nameof(BoostActivity)); 
         AudioManager.PlayOneShot(AudioManager.SoundType.Boost);
     }
@@ -152,11 +151,13 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         _isBoost = true;
         float currentVelZ = _rb.velocity.z;
-
+ 
+        _boostTween?.Kill();
+        _returtBoostTween?.Kill();
         _boostTween = DOTween.To(() => currentVelZ, x => currentVelZ = x, _boostSpeed, boost_delay)
             .OnComplete(delegate ()
             {
-                DOTween.To(() => currentVelZ, x => currentVelZ = x, _clampVelocityZ, boost_delay)
+                _returtBoostTween = DOTween.To(() => currentVelZ, x => currentVelZ = x, _clampVelocityZ, boost_delay)
                 .OnComplete(() => _isBoost = false);
             }); 
 

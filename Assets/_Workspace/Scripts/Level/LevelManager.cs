@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
     private Level[] _levels;
     private int _currentLevel;
 
+    private const int _minRandomLevel = 3; 
+
     private void Awake()
     {
         ServiceLocator.RegisterService(this); 
@@ -53,7 +55,7 @@ public class LevelManager : MonoBehaviour
     {
         if (_currentLevel < _levels.Length - 1)
             _currentLevel++;
-        else _currentLevel = 0;
+        else _currentLevel = Random.Range(_minRandomLevel, _levels.Length);
     }
     private void OnFirstSave()
     {

@@ -17,6 +17,9 @@ public class LevelContanier : MonoBehaviour
     [Space(10)]
     [SerializeField] private ParticleSystem _finishEffects;
 
+    private Player _player;
+    private bool _pointChecked; 
+
     public void SetActiveInteractiveObjects(bool hasJumper, bool hasBooster, bool hasBarier, bool interactiveBarier, bool hasAirplanes, bool hasPicked, bool checkPoint)
     {
         if (_finish != null)
@@ -45,20 +48,33 @@ public class LevelContanier : MonoBehaviour
     }
     public void Construct()
     {
+        _player = ServiceLocator.GetService<Player>();  
+
         if (isFinishContanier)
             ServiceLocator.GetService<LevelManager>().FinishTransform = _finish.transform;
     }
-
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (!other.CompareTag(ObjTags.player_tag)) return;
-
-        onLevelEnter?.Invoke();
-
-        if (isFinishContanier)
+        if (_player.transform.position.z >= _finish.transform.position.z && !_pointChecked)
         {
-            _finishEffects.Play();
-            GameManager.Finish();
+            onLevelEnter?.Invoke();
+
+            if (isFinishContanier)
+            {
+                _finishEffects.Play();
+                GameManager.Finish();
+            }
+
+            _pointChecked = true;
+
+            if (GameManager.DEBBUG_LOG)
+                Debug.Log($"OnLevelEnter <color=#10FFFF>LevelContanier</color>\"");
         }
     }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (!other.CompareTag(ObjTags.player_tag)) return;
+
+    //}
 }
