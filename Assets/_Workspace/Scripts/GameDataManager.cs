@@ -135,24 +135,54 @@ public static class GameDataManager
 #if UNITY_EDITOR 
         string saveFolder = Path.Combine("_Workspace", $"Saves");
         _savePath = Path.Combine(Application.dataPath, saveFolder, $"{SAVE_KEY}.json");
-#else
+#elif !UNITY_WEBGL
         _savePath = Path.Combine(Application.streamingAssetsPath, $"{SAVE_KEY}.json");       
 #endif
+
+#if !UNITY_WEBGL || UNITY_EDITOR
         string directoryPath = Path.GetDirectoryName(_savePath);
         if (!string.IsNullOrEmpty(directoryPath))
         {
             // Создать каталог, только если путь не пустой или null
             Directory.CreateDirectory(directoryPath);
         }
+#endif
     }
     public static string GetJson()
     {
+#if UNITY_EDITOR
         return File.ReadAllText(_savePath);
+#elif UNITY_WEBGL
+        return PlayerPrefs.GetString(SAVE_KEY);
+#else
+        return File.ReadAllText(_savePath);
+#endif
+    }
+    public static void SetJson(string json)
+    {
+#if UNITY_EDITOR
+        // Сохраняем JSON в файл
+        File.WriteAllText(_savePath, json);
+#elif UNITY_WEBGL
+        PlayerPrefs.SetString(SAVE_KEY, json); 
+#else
+        // Сохраняем JSON в файл
+        File.WriteAllText(_savePath, json);
+#endif
     }
     public static void Load()
     {
-        // Проверяем наличие файла перед загрузкой
-        if (File.Exists(_savePath))
+        bool exists = false;
+
+#if UNITY_EDITOR
+        exists = File.Exists(_savePath);
+#elif UNITY_WEBGL
+        exists = PlayerPrefs.HasKey(SAVE_KEY);
+#else
+        exists = File.Exists(_savePath);
+#endif
+
+        if (exists)
         {
             try
             {
@@ -188,8 +218,7 @@ public static class GameDataManager
         string json = JsonUtility.ToJson(_saveDataContainer);
         try
         {
-            // Сохраняем JSON в файл
-            File.WriteAllText(_savePath, json);
+            SetJson(json); 
 
             if (GameManager.DEBBUG_LOG)
                 Debug.Log($"Data saved");
