@@ -45,8 +45,11 @@ public class UISkinPrefab : UItemPrefabBase
         _priceIcon.enabled = !_item.Avable; 
         _priceIcon.sprite = _item.PriceIcon;
 
+        string Choosed = TextTranslator.CurrentTextLanguage("Choosed", "Выбрано");
+        string Select = TextTranslator.CurrentTextLanguage("Select", "Выбрать");
+
         _stateText.enabled = _selected || _item.Avable;
-        _stateText.text = _selected ? "Choosed" : "Select";
+        _stateText.text = _selected ? Choosed : Select;
         _stateText.color = _selected ? Color.green : Color.white; 
     }
     public override void Button()

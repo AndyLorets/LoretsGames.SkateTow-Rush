@@ -18,11 +18,17 @@ public class LanguagesText : MonoBehaviour
             _textPro = GetComponent<TextMeshProUGUI>();
 
         RenderText();
-        Debug.Log("Language: " + GP_Language.Current().ToString());
+
+        if (GameManager.DEBBUG_LOG)
+            Debug.Log("Language: " + GP_Language.Current().ToString());
     }
 
     public void Change(Language language) => GP_Language.Change(language, OnChange);
-    private void OnChange(Language language) => Debug.Log("LANGUAGE : ON CHANGE: " + language);
+    private void OnChange(Language language) 
+    { 
+        if (GameManager.DEBBUG_LOG) 
+            Debug.Log("LANGUAGE : ON CHANGE: " + language); 
+    }
 
     private void RenderText()
     {
@@ -41,5 +47,35 @@ public class LanguagesText : MonoBehaviour
                     _textPro.text = _ru;
                 break;
         }
+    }
+}
+public struct TextTranslator
+{
+    public static string CurrentTextLanguage(string en, string ru)
+    {
+        switch (GP_Language.Current())
+        {
+            case Language.English: return en;
+            case Language.Russian: return ru;
+        }
+        return en; 
+    }
+}
+[System.Serializable]
+public struct GetCurrentLanguageText
+{
+    [SerializeField] private string[] _ruDescriptions;
+    [SerializeField] private string[] _enDescriptions;
+
+    public string GetTextFromIndex(int index)
+    {
+        string[] text = GP_Language.Current() == Language.English ? _enDescriptions : _ruDescriptions;
+        return text[index];
+    }
+    public string GetTextRandom()
+    {
+        string[] text = GP_Language.Current() == Language.English ? _enDescriptions : _ruDescriptions;
+        int r = Random.Range(0, text.Length);
+        return text[r];
     }
 }

@@ -24,7 +24,7 @@ public class Player : MonoBehaviour, ITakeDamage
 
     private bool _isAlive = false;
     private bool _isJump = true;
-    private bool _isBoost;
+    public bool isBoost { get; private set; }
 
     private const float damage_impact_speed = 40f;
     private const float boost_delay = 1.5f;
@@ -143,13 +143,13 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     private void Boost()
     {
-        _isBoost = false;
+        isBoost = false;
         StartCoroutine(nameof(BoostActivity)); 
         AudioManager.PlayOneShot(AudioManager.SoundType.Boost);
     }
     private IEnumerator BoostActivity()
     {
-        _isBoost = true;
+        isBoost = true;
         float currentVelZ = _rb.velocity.z;
  
         _boostTween?.Kill();
@@ -158,10 +158,10 @@ public class Player : MonoBehaviour, ITakeDamage
             .OnComplete(delegate ()
             {
                 _returtBoostTween = DOTween.To(() => currentVelZ, x => currentVelZ = x, _clampVelocityZ, boost_delay)
-                .OnComplete(() => _isBoost = false);
+                .OnComplete(() => isBoost = false);
             }); 
 
-        while (_isBoost)
+        while (isBoost)
         {
             _rb.velocity = new Vector3(_rb.velocity.x, _rb.velocity.y, currentVelZ);
             yield return null; 
@@ -169,7 +169,7 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     private void ClampVelocity()
     {
-        if (_isBoost) return;
+        if (isBoost) return;
 
         float clampX = _rb.velocity.x;
         clampX = Mathf.Clamp(clampX, -_clampVelocityX, _clampVelocityX);
@@ -190,7 +190,7 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         _rb.drag = 2;
         _boostTween?.Kill();
-        _isBoost = false;
+        isBoost = false;
         StopCoroutine(nameof(BoostActivity));
     }
     public void TakeDamage(float damage)

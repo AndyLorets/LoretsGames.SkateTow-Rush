@@ -92,8 +92,6 @@ public class PlayerHookController : MonoBehaviour
         bool cutHook = HookPosition.z <= transform.position.z + z_min_hook_dist; 
         if (cutHook)
             ClearHookObj();
-
-        print(cutHook);
     }
     public void ClearHookObj()
     {

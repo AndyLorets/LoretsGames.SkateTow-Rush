@@ -43,6 +43,7 @@ public class UIGameOverRender : MonoBehaviour
         _darkPanel.enabled = false; 
 
     }
+    string TimeString => TextTranslator.CurrentTextLanguage("Time", "Время"); 
     private void RenderFinishPanel() => StartCoroutine(RenderDaley(true));
     private void RenderLosePanel() => StartCoroutine(RenderDaley(false));
     private IEnumerator RenderDaley(bool isFinish)
@@ -60,7 +61,7 @@ public class UIGameOverRender : MonoBehaviour
 
             uIMoveTween = _winButtonsTween;
             _finishPanel.gameObject.SetActive(true);
-            _finishTimeText.text = $"Time: {UITimerRenderController.GameTimeText()}";
+            _finishTimeText.text = $"{TimeString}: {UITimerRenderController.GameTimeText()}";
             _finishMoneyText.text = $"{money}";
             _finishKeyText.text = $"{keys}";
         }
@@ -68,7 +69,7 @@ public class UIGameOverRender : MonoBehaviour
         {
             uIMoveTween = _loseButtonsTween;
             _losePanel.gameObject.SetActive(true);
-            _loseScoreText.text = $"Time: {UITimerRenderController.GameTimeText()}";
+            _loseScoreText.text = $"{TimeString}: {UITimerRenderController.GameTimeText()}";
         }
 
         yield return new WaitForSeconds(delay_value);
@@ -76,4 +77,5 @@ public class UIGameOverRender : MonoBehaviour
         uIMoveTween.Show(); 
         onPanelRenderEnded?.Invoke(); 
     }
+    
 }

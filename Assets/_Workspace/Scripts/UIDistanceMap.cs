@@ -26,37 +26,37 @@ public class UIDistanceMap : MonoBehaviour
     }
     private void Start()
     {
-        Invoke(nameof(Construct), .15f); 
+        Invoke(nameof(Construct), 1f); 
     }
     private void Construct()
     {
         _player = ServiceLocator.GetService<Player>().transform;
-        _finish = ServiceLocator.GetService<LevelManager>().FinishTransform;  
+        _finish = ServiceLocator.GetService<LevelManager>().FinishTransform;
 
-        _levelText.text = $"LEVEL: {GameDataManager.CurrentLevel + 1}";
+        string text = TextTranslator.CurrentTextLanguage("LEVEL", "УРОВЕНЬ"); 
+        _levelText.text = $"{text}: {GameDataManager.CurrentLevel + 1}";
     }
     private void OnGameStart()
     {
         _uiMoveTween.Show();
-        StartCoroutine(RenderUI()); 
+        float totalDist = Vector3.Distance(_player.position, _finish.position);
+        StartCoroutine(RenderUI(totalDist)); 
     }
     private void OnGameOver()
     {
         _uiMoveTween.Hide(); 
     }
-    private IEnumerator RenderUI()
+    private IEnumerator RenderUI(float totalDist)
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(1);
-        float totalDist = Vector3.Distance(_player.position, _finish.position);
 
         while (!GameManager.isGameOver)
         {
-            // Рассчитываем текущее пройденное расстояние
             float currentDist = Vector3.Distance(_player.position, _finish.position);
             float progress = 1 - (currentDist / totalDist);
             _fillAmount.fillAmount = progress;
 
-    yield return waitForSeconds; 
+            yield return waitForSeconds;
         }
  
     }
