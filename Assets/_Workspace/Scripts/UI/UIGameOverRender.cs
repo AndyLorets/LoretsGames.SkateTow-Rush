@@ -12,10 +12,6 @@ public class UIGameOverRender : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _finishKeyText;
     [SerializeField] private UIMoveTween _winButtonsTween;
     [Space(10)]
-    [SerializeField] private Transform _losePanel;
-    [SerializeField] private TextMeshProUGUI _loseScoreText;
-    [SerializeField] private UIMoveTween _loseButtonsTween;
-    [Space(10)]
     [SerializeField] private Image _darkPanel;
 
 
@@ -28,12 +24,10 @@ public class UIGameOverRender : MonoBehaviour
     private void OnEnable()
     {
         GameManager.onFinish += RenderFinishPanel;
-        GameManager.onLose += RenderLosePanel; 
     }
     private void OnDisable()
     {
         GameManager.onFinish -= RenderFinishPanel;
-        GameManager.onLose -= RenderLosePanel;
     }
     private void Awake()
     {
@@ -45,12 +39,11 @@ public class UIGameOverRender : MonoBehaviour
     }
     string TimeString => TextTranslator.CurrentTextLanguage("Time", "Время"); 
     private void RenderFinishPanel() => StartCoroutine(RenderDaley(true));
-    private void RenderLosePanel() => StartCoroutine(RenderDaley(false));
     private IEnumerator RenderDaley(bool isFinish)
     {
         _darkPanel.enabled = true; 
         _darkPanel.DOColor(_darkColor, delay_value);
-        UIMoveTween uIMoveTween; 
+        UIMoveTween uIMoveTween = null; 
 
         yield return new WaitForSeconds(delay_value); 
 
@@ -61,20 +54,14 @@ public class UIGameOverRender : MonoBehaviour
 
             uIMoveTween = _winButtonsTween;
             _finishPanel.gameObject.SetActive(true);
-            _finishTimeText.text = $"{TimeString}: {UITimerRenderController.GameTimeText()}";
+            _finishTimeText.text = $"{TimeString}: {UIGameTimeRenderer.GameTimeText()}";
             _finishMoneyText.text = $"{money}";
             _finishKeyText.text = $"{keys}";
-        }
-        else
-        {
-            uIMoveTween = _loseButtonsTween;
-            _losePanel.gameObject.SetActive(true);
-            _loseScoreText.text = $"{TimeString}: {UITimerRenderController.GameTimeText()}";
         }
 
         yield return new WaitForSeconds(delay_value);
 
-        uIMoveTween.Show(); 
+        uIMoveTween?.Show(); 
         onPanelRenderEnded?.Invoke(); 
     }
     

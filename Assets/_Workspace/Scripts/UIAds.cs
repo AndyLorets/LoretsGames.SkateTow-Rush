@@ -26,9 +26,9 @@ public class UIAds : MonoBehaviour
         _panel.Hide();
         _bg.DOColor(Color.clear, 1f).OnComplete(() => _bg.enabled = false);
     }
-    public void ShowRewardAd()
+    public void ShowRewardAd(string rewardName = AdManager.REWARD_100)
     {
-        AdManager.ShowReward(AdManager.REWARD_100);
-        Hide(); 
+        AdManager.ShowReward(rewardName);
+        Hide();
     }
 }

@@ -44,7 +44,7 @@ public class PlayerHookController : MonoBehaviour
             {
                 Vector3 point = hit.point;
                 point.x = Mathf.Clamp(point.x, -x_hook_dist, x_hook_dist);
-                point.z = Mathf.Clamp(point.z, transform.position.z + z_min_hook_dist, transform.position.z + z_max_hook_dist);
+                point.z = Mathf.Clamp(point.z, transform.position.z + (z_min_hook_dist * z_min_hook_dist), transform.position.z + z_max_hook_dist);
                 SetHook(hit.transform, point); 
             }
         }

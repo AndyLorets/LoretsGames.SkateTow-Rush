@@ -31,13 +31,12 @@ public class AudioManager : MonoBehaviour
 
     public enum SoundType
     {
-        Picked, Grapple, Damage, Boost, Swipe, Click
+        Picked, Grapple, Damage, Boost, Swipe, Click, StartGame
     }
     private void Awake()
     {
         GameManager.onGameStart += PlayGameMusic;
-        GameManager.onFinish += PlayFinishMusic;
-        GameManager.onLose += PlayLoseSound;
+        GameManager.onFinish += PlayFinishSound;
 
         int saveValue = PlayerPrefs.GetInt(nameof(Mute), 0);
         Mute = saveValue == 1 ? true : false;
@@ -83,8 +82,7 @@ public class AudioManager : MonoBehaviour
     private void OnDestroy()
     {
         GameManager.onGameStart -= PlayGameMusic;
-        GameManager.onFinish -= PlayFinishMusic;
-        GameManager.onLose -= PlayLoseSound;
+        GameManager.onFinish -= PlayFinishSound;
     }
     private void PlayMenuMusic()
     {
@@ -95,15 +93,9 @@ public class AudioManager : MonoBehaviour
         _startGameSound.Play(); 
         StartCoroutine(MusicChangeProcess(_gameMusic));
     }
-    private void PlayFinishMusic()
+    private void PlayFinishSound()
     {
-        _winSound.Play();
-        _maleVoices[Random.Range(0, _maleVoices.Length)].Play();
-        StartCoroutine(MusicChangeProcess(_finishMusic, 4f));
-    }
-    private void PlayLoseSound()
-    {
-        StartCoroutine(MusicChangeProcess(_loseSound));
+        StartCoroutine(MusicChangeProcess(_loseSound, 4f));
     }
     public static void PlayOneShot(SoundType soundType)
     {
@@ -121,6 +113,8 @@ public class AudioManager : MonoBehaviour
                 _instance?._swipeSound.Play(); break;
             case SoundType.Click:
                 _instance?._clickSound.Play(); break;
+            case SoundType.StartGame:
+                _instance?._startGameSound.Play(); break;
         }
     }
     public void PlayClickSound()

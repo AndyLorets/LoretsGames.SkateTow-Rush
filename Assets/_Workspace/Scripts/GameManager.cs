@@ -1,6 +1,7 @@
 using GamePush;
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,10 +11,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIMoveTween _pauseTween;
     [SerializeField] private UIMoveTween _pauseBtnTween;
     [SerializeField] private Image _pauseBG; 
-    [SerializeField] private Button _upgradeButton;     
+    [SerializeField] private Button _upgradeButton;
+    [SerializeField] private UIAds _respawnAds; 
 
     public static Action onFinish;
-    public static Action onLose;
     public static Action onNextLevel;
     public static Action onRestart;
     public static Action onGameStart;
@@ -28,8 +29,14 @@ public class GameManager : MonoBehaviour
 
     public const int nextLevel_fade_duration = 1;
     private const int framerate_value = 60;
+
+    private static GameManager _instance; 
+
     private void Awake()
     {
+        if (_instance == null)
+            _instance = this; 
+
         SetDebbugState();
 
         if(FindObjectOfType(typeof(SceneLoader)) == null)
@@ -54,21 +61,23 @@ public class GameManager : MonoBehaviour
         StartCoroutine(SetFrameRate(framerate_value));
         Invoke(nameof(ShowUpgrades), .5f); 
     }
-    public void Pause()
+    public static void Pause()
     {
         Time.timeScale = 0; 
         AudioListener.pause = true;
-        _pauseBG.enabled = true;
-        _pauseTween.Show();
-        _pauseBtnTween.Hide(); 
+
+        _instance._pauseBG.enabled = true;
+        _instance._pauseTween.Show();
+        _instance._pauseBtnTween.Hide(); 
     }
-    public void Resume()
+    public static void Resume()
     {
         Time.timeScale = 1;
         AudioListener.pause = false;
-        _pauseBG.enabled = false;
-        _pauseTween.Hide();
-        _pauseBtnTween.Show(); 
+
+        _instance._pauseBG.enabled = false;
+        _instance._pauseTween.Hide();
+        _instance._pauseBtnTween.Show(); 
     }
     private void ShowUpgrades()
     {
@@ -96,14 +105,12 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         if (isGameStart || isGameOver) 
-            return; 
+            return;
 
-        onGameStart?.Invoke();
         isGameStart = true;
+        onGameStart?.Invoke();
 
         _pauseBtnTween.Show();
-
-        StartCoroutine(TimerManager.GameTimer());
 
         CameraManager.ChangeCam(CameraManager.cam_game_name);
 
@@ -116,10 +123,8 @@ public class GameManager : MonoBehaviour
         GameDataManager.Load();
         MoneyManager.Init();
         GemManager.Init();
-        TimerManager.Init();
         UIMoneyRenderController.Init();
         UIGemRenderController.Init();
-        UITimerRenderController.Init();
 
         if (DEBBUG_LOG)
             Debug.Log("Initialize All");
@@ -139,9 +144,9 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver) return;
 
-        isGameOver = true;
-        isGameStart = false; 
-        onLose?.Invoke();
+        if (AdManager.RewardedAvailable)
+            _instance._respawnAds.Show(); 
+        else Finish(); 
 
         if (DEBBUG_LOG)
             Debug.Log($"Game is Losed. <color=#00FFFF>Current Level: {GameDataManager.CurrentLevel}</color>\"");
@@ -189,10 +194,8 @@ public class GameManager : MonoBehaviour
         // ResetAll statics class
         MoneyManager.Reset();    
         GemManager.Reset();
-        TimerManager.Reset();
         UIMoneyRenderController.Reset();
         UIGemRenderController.Reset();
-        UITimerRenderController.Reset();
 
         onGameStart -= HideTweens;
 

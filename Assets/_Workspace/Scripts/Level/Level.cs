@@ -22,7 +22,6 @@ public class Level : MonoBehaviour
 
     private void Start()
     {
-        TimerManager.Init(_startLevelTime);
         ConstructCars();
         ConstructLevelContaniers();
 
@@ -51,7 +50,6 @@ public class Level : MonoBehaviour
             LevelContanier levelContanier = levelContanierObj.GetComponent<LevelContanier>();
             bool notHaveCheckPoint = i % Interval_ÑheckPointCallCount == 0; 
             levelContanier.isFinishContanier = i == _levelContaniersInfo.Length - 1 ? true : false;
-            levelContanier.onLevelEnter += CheckPoint;
             levelContanier.Construct();
             levelContanier.SetActiveInteractiveObjects(_levelContaniersInfo[i].HasJumper, _levelContaniersInfo[i].HasBooster,
                 _levelContaniersInfo[i].HasBarier, _levelContaniersInfo[i].HasInteractiveBarier, _levelContaniersInfo[i].HasAirplane, _levelContaniersInfo[i].HasPicked, !notHaveCheckPoint);
@@ -67,14 +65,6 @@ public class Level : MonoBehaviour
             _cars[i].speed = _carsSpeed; 
         }
     }
-    private void CheckPoint()
-    {
-        _checkPointCallCount++;
-        if (_checkPointCallCount % Interval_ÑheckPointCallCount == 0)
-            TimerManager.AddTime();
-
-        //EnableNearRoads();
-    }
     private void EnableNearRoads()
     {
         if (_currentLevelContanier > 0)
@@ -86,14 +76,6 @@ public class Level : MonoBehaviour
         if (_currentLevelContanier < _levelContanierList.Count - 3)
             _currentLevelContanier++;
     }
-    private void OnDestroy()
-    {
-        for (int i = 0; i < _levelContanierList.Count; i++)
-        {
-            _levelContanierList[i].onLevelEnter -= CheckPoint;
-        }
-    }
-
 }
 [System.Serializable]
 public struct LevelContanierInfo

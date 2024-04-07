@@ -43,7 +43,7 @@ public class LevelReview : MonoBehaviour
     private int GetStarCount()
     {
         LevelTimeInfo levelTimeInfo = ServiceLocator.GetService<LevelManager>().ActiveLevel.LevelTimeInfo;
-        float gameTime = TimerManager.gameTime;
+        float gameTime = Time.time;
 
         if (gameTime <= levelTimeInfo.goldTime) 
             return 3;

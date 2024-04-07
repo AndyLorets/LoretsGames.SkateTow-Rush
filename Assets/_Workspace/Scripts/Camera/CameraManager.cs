@@ -23,14 +23,12 @@ public class CameraManager : MonoBehaviour
     private void OnEnable()
     {
         GameManager.onFinish += ChangeToWaitCam;
-        GameManager.onLose += ChangeToWaitCam; 
         //TimerManager.onTimeChanged += PostEffectTweening;
         EmojiBehaviour.onEmoji += PostEffectTweening; 
     }
     private void OnDisable()
     {
         GameManager.onFinish -= ChangeToWaitCam;
-        GameManager.onLose -= ChangeToWaitCam;
         //TimerManager.onTimeChanged -= PostEffectTweening;
         EmojiBehaviour.onEmoji -= PostEffectTweening;
     }

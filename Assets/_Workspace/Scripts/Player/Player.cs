@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Player : MonoBehaviour, ITakeDamage
@@ -18,11 +19,15 @@ public class Player : MonoBehaviour, ITakeDamage
     private Collider _col; 
     private PlayerAnimationsController _animations;
 
-    [Header("Components"), Space(10)]
+    [Header("RagDoll"), Space(10)]
     [SerializeField] private Rigidbody[] _ragdollRb;
     [SerializeField] private Collider[] _ragdollCol;
 
-    private bool _isAlive = false;
+    [Header("Effects"), Space(10)]
+    [SerializeField] private ParticleSystem _hitEffect;
+    [SerializeField] private ParticleSystem _respawnEffect;
+
+    private bool _canTakeDamage = false;
     private bool _isJump = true;
     public bool isBoost { get; private set; }
 
@@ -56,12 +61,12 @@ public class Player : MonoBehaviour, ITakeDamage
     private void OnEnable()
     {
         GameManager.onFinish += SetFinishParameters;
-        GameManager.onGameStart += FirstMoveStarter; 
+        GameManager.onGameStart += BoostImmortal; 
     }
     private void OnDisable()
     {
         GameManager.onFinish -= SetFinishParameters;
-        GameManager.onGameStart -= FirstMoveStarter;
+        GameManager.onGameStart -= BoostImmortal;
     }
 
     private void OnDestroy()
@@ -77,8 +82,6 @@ public class Player : MonoBehaviour, ITakeDamage
         _rb = GetComponent<Rigidbody>();
         _col = GetComponent<Collider>();    
         _animations = new PlayerAnimationsController(this, transform.GetChild(0).GetComponent<Animator>());
-
-        _isAlive = false;
 
         SetRagdollState(false);
     }
@@ -114,14 +117,15 @@ public class Player : MonoBehaviour, ITakeDamage
 
         ClampVelocity(); 
     }
-    private void FirstMoveStarter()
+    private void BoostImmortal()
     {
+        _canTakeDamage = false;
         Boost();
         Invoke(nameof(Alive), alive_delay);
     }
     private void Alive()
     {
-        _isAlive = true;
+        _canTakeDamage = true;
     }
     private void Jump(Collision other)
     {
@@ -132,9 +136,6 @@ public class Player : MonoBehaviour, ITakeDamage
         {
             _rb.AddForce(Vector3.up * _jumpPower, ForceMode.VelocityChange);
             jumper.ActiveJumper();
-
-            if (SpeedScore > 0)
-                TimerManager.AddTime();
 
             onTrick?.Invoke();
             CameraManager.ChangeCam(CameraManager.cam_fly_name);
@@ -179,13 +180,6 @@ public class Player : MonoBehaviour, ITakeDamage
         clampZ = Mathf.Clamp(clampZ, -4, _clampVelocityZ);
         _rb.velocity = new Vector3(clampX, clampY, clampZ);
     }
-
-    public void SetRigibodyDrag(float value)
-    {
-        _rb.drag += value;
-    }
-
-    #region GameLogic
     private void SetFinishParameters()
     {
         _rb.drag = 2;
@@ -195,21 +189,42 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     public void TakeDamage(float damage)
     {
-        if (!_isAlive) return; 
+        if (!_canTakeDamage) return;
 
+        _hitEffect?.Play(); 
         AudioManager.PlayOneShot(AudioManager.SoundType.Damage);
+
         if (damage > damage_impact_speed)
             Die();
     }
     private void Die()
     {
-        _rb.AddTorque(Vector3.one * 50, ForceMode.Impulse);
-
+        _canTakeDamage = false; 
+        _rb.drag = 5;
+        isBoost = false; 
         onDie?.Invoke();    
         SetRagdollState(true);
 
         ServiceLocator.GetService<PlayerHookController>().ClearHookObj();
         GameManager.Lose();
+    }
+    public void Respawn()
+    {
+        _respawnEffect?.Play(); 
+        _rb.drag = 0;
+        SetRagdollState(false);
+        BoostImmortal(); 
+    }
+    public void RespawnAfterEnd()
+    {
+        Vector3 pos = new Vector3(transform.position.x, transform.position.y, 5);
+        Vector3 velocity = _rb.velocity;
+
+        _respawnEffect?.Play();
+        transform.position = pos;
+        _rb.velocity = velocity; 
+
+        BoostImmortal();
     }
     private void SetRagdollState(bool state)
     {
@@ -221,8 +236,6 @@ public class Player : MonoBehaviour, ITakeDamage
 
         onChangeRagdollState?.Invoke(state); 
     }
-
-    #endregion
 
     #region Collisions
 
