@@ -14,13 +14,11 @@ public class SceneLoader : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.onNextLevel += LoadGameScene;
         GameManager.onRestart += LoadGameScene;
         //GameManager.onRestartAfterFinish += LoadGameScene;  
     }
     private void OnDisable()
     {
-        GameManager.onNextLevel -= LoadGameScene;
         GameManager.onRestart -= LoadGameScene;
         //GameManager.onRestartAfterFinish -= LoadGameScene;
     }

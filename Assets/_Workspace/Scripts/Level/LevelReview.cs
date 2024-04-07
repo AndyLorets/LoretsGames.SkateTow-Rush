@@ -8,6 +8,7 @@ public class LevelReview : MonoBehaviour
     [SerializeField] private Sprite _dissableStar;
     [Space(5)]
     [SerializeField] private Image[] _starImages;
+    [SerializeField] private LevelTimeInfo _levelTimeInfo; 
 
 
     private void Start()
@@ -42,16 +43,15 @@ public class LevelReview : MonoBehaviour
     }
     private int GetStarCount()
     {
-        LevelTimeInfo levelTimeInfo = ServiceLocator.GetService<LevelManager>().ActiveLevel.LevelTimeInfo;
         float gameTime = Time.time;
 
-        if (gameTime <= levelTimeInfo.goldTime) 
+        if (gameTime >= _levelTimeInfo.goldTime) 
             return 3;
 
-        if (gameTime <= levelTimeInfo.silverTime)
+        if (gameTime >= _levelTimeInfo.silverTime)
             return 2;
 
-        if (gameTime <= levelTimeInfo.bronzeTime)
+        if (gameTime >= _levelTimeInfo.bronzeTime)
             return 1;
 
         return 0; 

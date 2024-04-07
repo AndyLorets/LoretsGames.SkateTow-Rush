@@ -76,23 +76,15 @@ public static class GameDataManager
 
     private class SaveDataContainer
     {
-        public int currentLevel;
         public int moneyCount;
         public int gemCount;
-        public SerializableDictionary<int, float> bestLevelTime = new SerializableDictionary<int, float>();
         public SerializableDictionary<string, int> upgradeValue = new SerializableDictionary<string, int>();
         public SerializableDictionary<string, int> upgradePrice = new SerializableDictionary<string, int>();
-
         public SerializableDictionary<string, bool> skinAvable = new SerializableDictionary<string, bool>();
         public Texture skateTexture;
     }
 
     // GENERAL
-    public static int CurrentLevel
-    {
-        get => _saveDataContainer.currentLevel;
-        set => _saveDataContainer.currentLevel = value;
-    }
     public static int MoneyCount
     {
         get => _saveDataContainer.moneyCount;
@@ -102,11 +94,6 @@ public static class GameDataManager
     {
         get => _saveDataContainer.gemCount;
         set => _saveDataContainer.gemCount = value;
-    }
-    public static SerializableDictionary<int, float> BestLevelTime
-    {
-        get => _saveDataContainer.bestLevelTime;
-        set => _saveDataContainer.bestLevelTime = value;
     }
     // UPGRADE
     public static SerializableDictionary<string, int> UpgradeValue

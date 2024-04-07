@@ -4,11 +4,12 @@ public class Car : VehicleBase
 {
     [SerializeField] private Transform _skinsParent;
     [SerializeField] private AudioSource _audio;
+    [SerializeField] private float _maxPosZ;
 
     private GameObject[] _skins;
     private BoxCollider _collder;
-    public float speed { get; set; } = 20f;
-    public float maxPosZ { private get; set; }
+
+    private float _speed; 
 
     private void Awake()
     {
@@ -21,6 +22,10 @@ public class Car : VehicleBase
     protected override void Construct()
     {
         base.Construct();
+
+        CarsManager carsManager = transform.parent.GetComponent<CarsManager>();
+        _maxPosZ = carsManager.maxPosZ;
+        _speed = carsManager.carSpeed;
 
         int skinCount = _skinsParent.childCount;
         _skins = new GameObject[skinCount];
@@ -43,11 +48,11 @@ public class Car : VehicleBase
     }
     protected virtual void FixedUpdate()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        transform.Translate(Vector3.forward * _speed * Time.deltaTime);
     }
     protected virtual void Update()
     {
-        if (transform.position.z > maxPosZ)
+        if (transform.position.z > _maxPosZ)
             Restart(); 
     }
     protected override void Restart()

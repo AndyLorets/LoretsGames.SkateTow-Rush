@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIAds _respawnAds; 
 
     public static Action onFinish;
-    public static Action onNextLevel;
     public static Action onRestart;
     public static Action onGameStart;
     public static Action onSaveAll;
@@ -81,7 +80,7 @@ public class GameManager : MonoBehaviour
     }
     private void ShowUpgrades()
     {
-        if (GameDataManager.CurrentLevel == 0) return; 
+        if (GameDataManager.MoneyCount < 100) return; 
 
         _upgradeButton.onClick.Invoke(); 
     }
@@ -115,7 +114,7 @@ public class GameManager : MonoBehaviour
         CameraManager.ChangeCam(CameraManager.cam_game_name);
 
         if (DEBBUG_LOG)
-            Debug.Log($"Game is Started. <color=#00FFFF>Current Level: {GameDataManager.CurrentLevel}</color>\"");
+            Debug.Log($"<color=#00FFFF>Game is Started</color>\"");
     }
     private void InitializeAll()
     {
@@ -138,7 +137,7 @@ public class GameManager : MonoBehaviour
         onFinish?.Invoke();
 
         if (DEBBUG_LOG)
-            Debug.Log($"Game is Finished. <color=#00FFFF>Current Level: {GameDataManager.CurrentLevel}</color>\"");
+            Debug.Log($"<color=#00FFFF>Game is Finished.</color>\"");
     }
     public static void Lose()
     {
@@ -149,24 +148,15 @@ public class GameManager : MonoBehaviour
         else Finish(); 
 
         if (DEBBUG_LOG)
-            Debug.Log($"Game is Losed. <color=#00FFFF>Current Level: {GameDataManager.CurrentLevel}</color>\"");
-    }
-    public void NextLevel()
-    {
-        onNextLevel?.Invoke();
-        SaveAll();
-
-        if (DEBBUG_LOG)
-            Debug.Log($"Next Level. <color=#00FFFF>Current Level: {GameDataManager.CurrentLevel}</color>\"");
-
-        AdManager.ShowFullScreen(); 
+            Debug.Log($"<color=#00FFFF>Game is Losed.</color>\"");
     }
     public void Restart()
     {
         onRestart?.Invoke();
+        SaveAll();
 
         if (DEBBUG_LOG)
-            Debug.Log($"Game is Restarted. <color=#00FFFF>Current Level: {GameDataManager.CurrentLevel}</color>\"");
+            Debug.Log($"<color=#00FFFF>Game is Restarted.</color>\"");
 
         AdManager.ShowFullScreen();
     }

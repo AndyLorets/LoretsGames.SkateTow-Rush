@@ -11,9 +11,7 @@ public class ForegroundShadow : MonoBehaviour
     
     private void Awake()
     {
-        GameManager.onNextLevel += SetColor;
         GameManager.onRestart += SetColor;
-        //GameManager.onRestartAfterFinish += SetColor;
         Construct(); 
     }
     private void Construct()
@@ -35,8 +33,6 @@ public class ForegroundShadow : MonoBehaviour
     }
     private void OnDestroy()
     {
-        GameManager.onNextLevel -= SetColor;
         GameManager.onRestart -= SetColor;
-        //GameManager.onRestartAfterFinish -= SetColor;
     }
 }
