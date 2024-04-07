@@ -24,7 +24,7 @@ public class UIGameTimeRenderer : MonoBehaviour
         WaitForSeconds waitForSeconds = new WaitForSeconds(.1f);
         while (GameManager.isGameStart)
         {
-            _text.text = GameTimeText();
+            _text.text = ScoreText();
             yield return waitForSeconds;
         }
     }
@@ -34,13 +34,13 @@ public class UIGameTimeRenderer : MonoBehaviour
         _uiMoveTween.Show();
         StartCoroutine(Timer());
     }
-    public static string GameTimeText()
+    public static string ScoreText()
     {
         float t = Time.time;
         string minutes = Mathf.Floor(t / 60).ToString("00");
         string seconds = Mathf.Floor(t % 60).ToString("00");
         string milliseconds = Mathf.Floor((t * 100) % 100).ToString("00");
-        string text = minutes + ":" + seconds + ":" + milliseconds;
+        string text = "Score: " + minutes + ":" + seconds + ":" + milliseconds;
         return text;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,10 +10,12 @@ public class ContanierManager : MonoBehaviour
     private int _currentContanierIndex;
     private float _playerContanierDist;
 
+    public static Action onReset; 
+
     private const int CONTANIER_INDEX_INTERVAL = 2; 
     private const float CONTANIER_INTERVAL = 217f;
     public const float LEVEL_DIST = 4314f;
-    private const float PLAYER_DIST_OFFSET = 6f;
+    private const float PLAYER_DIST_OFFSET = 1f;
 
     private void Awake()
     {
@@ -42,46 +45,25 @@ public class ContanierManager : MonoBehaviour
     }
     private void Update()
     {
-        bool next = _player.transform.position.z >= _playerContanierDist;
-        bool respawn = _player.transform.position.z >= LEVEL_DIST;
-        if (next)
+        bool isContaniersActive = _player.transform.position.z >= _playerContanierDist;
+        bool isRespawn = _player.transform.position.z >= LEVEL_DIST;
+
+        if (isContaniersActive)
         {
             SetContaniersActive();
 
         }
-        if (respawn)
+        if (isRespawn)
         {
-            RespawnAfterEnd();
+            RespawnAfterEnd(); 
         }
-    }
-    private void RespawnAfterEnd()
-    {
-        _player.RespawnAfterEnd();
-        SetPlayerContanierDist();
-    }
-    private void ResetAllContaniers()
-    {
-        _currentContanierIndex = 0;
-
-        for (int i = 0; i < _levelContanierList.Count; i++)
-        {
-            _levelContanierList[i].gameObject.SetActive(false);
-        }
-
-        ActiveNearContaniers();
     }
     private void SetContaniersActive()
     {
         SetPlayerContanierDist();
 
-        if (_currentContanierIndex < _levelContanierList.Count)
+        if (_currentContanierIndex < _levelContanierList.Count - (CONTANIER_INDEX_INTERVAL + 1))
             _currentContanierIndex += CONTANIER_INDEX_INTERVAL;
-        else
-        {
-            ResetAllContaniers();
-            Debug.LogError("Индекс выходит за пределы списка!");
-            return;
-        }
 
         for (int i = 0; i < _currentContanierIndex; i++)
         {
@@ -94,8 +76,27 @@ public class ContanierManager : MonoBehaviour
     {
         for (int i = _currentContanierIndex; i < _currentContanierIndex + CONTANIER_INDEX_INTERVAL + 1; i++)
         {
-            _levelContanierList[i].gameObject.SetActive(true);
+            if (i < _levelContanierList.Count)
+                _levelContanierList[i].gameObject.SetActive(true);
         }
+    }
+    private void RespawnAfterEnd()
+    {
+        _player.RespawnAfterEnd();
+        ResetAllContaniers();
+        SetPlayerContanierDist();
+    }
+    private void ResetAllContaniers()
+    {
+        _currentContanierIndex = 0;
+        onReset?.Invoke();
+
+        for (int i = 0; i < _levelContanierList.Count; i++)
+        {
+            _levelContanierList[i].gameObject.SetActive(false);
+        }
+
+        ActiveNearContaniers();
     }
     private void sort()
     {
