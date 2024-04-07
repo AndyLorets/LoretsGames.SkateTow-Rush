@@ -1284,12 +1284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d554c5d606a0e974ca2cbde1100ef5a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timePreview: 0
-  _discriptions:
-  - This game develop on Unity Engine
-  - This game develop on Unreal Engine
-  - This game develop on Godot Engine
-  _discriptionText: {fileID: 41238276}
 --- !u!114 &767344979
 MonoBehaviour:
   m_ObjectHideFlags: 0

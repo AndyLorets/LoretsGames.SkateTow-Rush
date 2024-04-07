@@ -1,30 +1,43 @@
 using GamePush;
 using UnityEngine;
-
+using System;
 public static class AdManager 
 {
-    private static float _interNextShowTime; 
+    private static float _interNextShowTime = AD_COOLDOWN;
+    private static float _rewardNextShowTime = AD_COOLDOWN;
 
     public const string REWARD_100 = "REWARD_100";
     public const string RESPAWN = "RESPAWN";
-    private const float INTER_COOLDOWN = 60;
+    private const float AD_COOLDOWN = 60;
 
 #if UNITY_EDITOR
-    public static bool RewardedAvailable = true;
+    public static bool RewardedAvailable => Time.time >= _rewardNextShowTime;
+    public static bool FullScreenAvailable => Time.time >= _interNextShowTime;
 #elif UNITY_WEBGL
-    public static bool RewardedAvailable => GP_Ads.IsRewardedAvailable(); 
+    public static bool RewardedAvailable => GP_Ads.IsRewardedAvailable() && Time.time >= _rewardNextShowTime; 
+    public static bool FullScreenAvailable => GP_Ads.IsFullscreenAvailable() && Time.time >= _interNextShowTime;
 #endif
+
     public static void ShowFullScreen()
     {
-        bool canShowInter = Time.time >= _interNextShowTime; 
-        if (!canShowInter) return; 
+        if (!FullScreenAvailable)
+        {
+            return;
+        }
 
         GP_Ads.ShowFullscreen(OnFullscreenStart, OnFullscreenClose);
-        _interNextShowTime = Time.time + INTER_COOLDOWN;
+        _interNextShowTime = Time.time + AD_COOLDOWN;
+
+        if (GameManager.DEBBUG_LOG)
+            Debug.Log($"<color=#00FFFF>ShowFullScreen</color>\"");
     }
     public static void ShowReward(string rewardName)
     {
         GP_Ads.ShowRewarded(rewardName, OnRewardedReward, OnRewardedStart, OnRewardedClose);
+        _rewardNextShowTime = Time.time + AD_COOLDOWN;
+
+        if (GameManager.DEBBUG_LOG)
+            Debug.Log($"<color=#00FFFF>ShowReward</color>\"");
     }
     private static void OnRewardedReward(string rewardName)
     {
@@ -54,6 +67,6 @@ public static class AdManager
     }
     private static void OnFullscreenClose(bool succes)
     {
-        GameManager.Resume();
+        GameManager.Resume(); 
     }
 }

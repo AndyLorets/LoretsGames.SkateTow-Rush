@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIMoveTween _pauseBtnTween;
     [SerializeField] private Image _pauseBG; 
     [SerializeField] private Button _upgradeButton;
-    [SerializeField] private UIAds _respawnAds; 
+    [SerializeField] private UIAds _respawnAds;
 
     public static Action onFinish;
     public static Action onRestart;
@@ -58,7 +58,9 @@ public class GameManager : MonoBehaviour
     {
         InitializeAll();
         StartCoroutine(SetFrameRate(framerate_value));
-        Invoke(nameof(ShowUpgrades), .5f); 
+        Invoke(nameof(ShowUpgrades), .5f);
+
+        AdManager.ShowFullScreen();
     }
     public static void Pause()
     {
@@ -148,16 +150,16 @@ public class GameManager : MonoBehaviour
         if (isGameOver) return;
 
         if (AdManager.RewardedAvailable)
-            _instance._respawnAds.Show(); 
-        else Finish(); 
-
+            _instance._respawnAds.Show();
+        else
+            Finish();
+ 
         if (DEBBUG_LOG)
             Debug.Log($"<color=#00FFFF>Game is Losed.</color>\"");
     }
     public void Restart()
     {
-        AdManager.ShowFullScreen();
-
+        Resume(); 
         onRestart?.Invoke();
         SaveAll();
 
