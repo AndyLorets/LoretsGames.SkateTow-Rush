@@ -192,6 +192,7 @@ public class GameManager : MonoBehaviour
         GemManager.Reset();
         UIMoneyRenderController.Reset();
         UIGemRenderController.Reset();
+        UIGameTimeRenderer.Reset(); 
 
         onGameStart -= HideTweens;
 

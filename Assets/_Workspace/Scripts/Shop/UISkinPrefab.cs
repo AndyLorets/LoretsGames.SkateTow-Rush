@@ -7,6 +7,7 @@ public class UISkinPrefab : UItemPrefabBase
     [SerializeField] private TextMeshProUGUI _stateText; 
     [SerializeField] private Image _art;
     [SerializeField] private SkateSkinsInfo _item;
+    [SerializeField] private UIAds _UIAds; 
     bool _selected => GameDataManager.SkateTexture == _item.Texture; 
 
     protected override void Awake()
@@ -69,7 +70,8 @@ public class UISkinPrefab : UItemPrefabBase
     {
         base.OnFailed();
 
-        ServiceLocator.GetService<UIAds>().Show(); 
+        if (AdManager.RewardedAvailable)
+            _UIAds.Show();
         Debug.Log($"Sell <color=yellow>{ItemConvertor.ConvertTitleFromType(_item.Type)}</color> <color=#FF3600>Failed!</color>!");
     }
 }

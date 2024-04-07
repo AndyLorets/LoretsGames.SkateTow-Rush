@@ -21,9 +21,7 @@ public static class AdManager
     public static void ShowFullScreen()
     {
         if (!FullScreenAvailable)
-        {
             return;
-        }
 
         GP_Ads.ShowFullscreen(OnFullscreenStart, OnFullscreenClose);
         _interNextShowTime = Time.time + AD_COOLDOWN;
@@ -33,6 +31,9 @@ public static class AdManager
     }
     public static void ShowReward(string rewardName)
     {
+        if (!RewardedAvailable)
+            return; 
+
         GP_Ads.ShowRewarded(rewardName, OnRewardedReward, OnRewardedStart, OnRewardedClose);
         _rewardNextShowTime = Time.time + AD_COOLDOWN;
 

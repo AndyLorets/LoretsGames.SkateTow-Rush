@@ -137,6 +137,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 1b36ed98919269549a961f990ae8c746,
         type: 2}
+    - target: {fileID: 1093966409981804592, guid: e137401da560457458e7cf8fc4402114,
+        type: 3}
+      propertyPath: _UIAds
+      value: 
+      objectReference: {fileID: 142108301}
     - target: {fileID: 2289804213260228571, guid: e137401da560457458e7cf8fc4402114,
         type: 3}
       propertyPath: m_Pivot.x
@@ -14169,7 +14174,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800422480}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.23103815, y: 0.35922012, z: -0.0922681, w: 0.8994826}
+  m_LocalRotation: {x: 0.23103818, y: 0.3592201, z: -0.0922681, w: 0.8994826}
   m_LocalPosition: {x: -8.44649, y: 7.0000005, z: -1.6299691}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14293,6 +14298,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 9fc1e90882dae124b96f09131844874f,
         type: 2}
+    - target: {fileID: 1093966409981804592, guid: e137401da560457458e7cf8fc4402114,
+        type: 3}
+      propertyPath: _UIAds
+      value: 
+      objectReference: {fileID: 142108301}
     - target: {fileID: 2289804213260228571, guid: e137401da560457458e7cf8fc4402114,
         type: 3}
       propertyPath: m_Pivot.x
@@ -29567,6 +29577,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: fdc00d6b7159e8b4085d271a9656c786,
         type: 2}
+    - target: {fileID: 1093966409981804592, guid: e137401da560457458e7cf8fc4402114,
+        type: 3}
+      propertyPath: _UIAds
+      value: 
+      objectReference: {fileID: 142108301}
     - target: {fileID: 2289804213260228571, guid: e137401da560457458e7cf8fc4402114,
         type: 3}
       propertyPath: m_Pivot.x
@@ -53435,6 +53450,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 6638d34142257b64cb785f9254e62ae9,
         type: 2}
+    - target: {fileID: 1093966409981804592, guid: e137401da560457458e7cf8fc4402114,
+        type: 3}
+      propertyPath: _UIAds
+      value: 
+      objectReference: {fileID: 142108301}
     - target: {fileID: 2289804213260228571, guid: e137401da560457458e7cf8fc4402114,
         type: 3}
       propertyPath: m_Pivot.x
@@ -56298,6 +56318,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1575117685}
     m_Modifications:
+    - target: {fileID: 1093966409981804592, guid: e137401da560457458e7cf8fc4402114,
+        type: 3}
+      propertyPath: _UIAds
+      value: 
+      objectReference: {fileID: 142108301}
     - target: {fileID: 2289804213260228571, guid: e137401da560457458e7cf8fc4402114,
         type: 3}
       propertyPath: m_Pivot.x
