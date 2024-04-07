@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, ITakeDamage
 {
+    [SerializeField] public Vector3 vel;  
+
     [Header("Parameters")]
     [SerializeField, Range(5, 25)] private int _jumpPower = 10;
     [SerializeField, Range(80, 120)] private int _boostSpeed = 100;
@@ -150,6 +152,7 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     private IEnumerator BoostActivity()
     {
+        isBoost = false; 
         isBoost = true;
         float currentVelZ = _rb.velocity.z;
  
@@ -158,7 +161,7 @@ public class Player : MonoBehaviour, ITakeDamage
         _boostTween = DOTween.To(() => currentVelZ, x => currentVelZ = x, _boostSpeed, boost_delay)
             .OnComplete(delegate ()
             {
-                _returtBoostTween = DOTween.To(() => currentVelZ, x => currentVelZ = x, _clampVelocityZ, boost_delay)
+                _returtBoostTween = DOTween.To(() => currentVelZ, x => currentVelZ = x, _clampVelocityZ, boost_delay * 2)
                 .OnComplete(() => isBoost = false);
             }); 
 
@@ -205,6 +208,7 @@ public class Player : MonoBehaviour, ITakeDamage
         onDie?.Invoke();    
         SetRagdollState(true);
 
+        ServiceLocator.GetService<AudioManager>().StopAllMusic();
         ServiceLocator.GetService<PlayerHookController>().ClearHookObj();
         GameManager.Lose();
     }
@@ -213,7 +217,8 @@ public class Player : MonoBehaviour, ITakeDamage
         _respawnEffect?.Play(); 
         _rb.drag = 0;
         SetRagdollState(false);
-        BoostImmortal(); 
+        BoostImmortal();
+        AudioManager.PlayOneShot(AudioManager.SoundType.Win);
     }
     public void RespawnAfterEnd()
     {
@@ -225,6 +230,7 @@ public class Player : MonoBehaviour, ITakeDamage
         _rb.velocity = velocity; 
 
         BoostImmortal();
+        AudioManager.PlayOneShot(AudioManager.SoundType.Win);
     }
     private void SetRagdollState(bool state)
     {

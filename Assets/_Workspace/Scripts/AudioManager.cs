@@ -31,12 +31,13 @@ public class AudioManager : MonoBehaviour
 
     public enum SoundType
     {
-        Picked, Grapple, Damage, Boost, Swipe, Click, StartGame
+        Picked, Grapple, Damage, Boost, Swipe, Click, Win
     }
     private void Awake()
     {
-        GameManager.onGameStart += PlayGameMusic;
+        ServiceLocator.RegisterService(this);   
         GameManager.onFinish += PlayFinishSound;
+        GameManager.onGameStart += PlayGameMusic;
 
         int saveValue = PlayerPrefs.GetInt(nameof(Mute), 0);
         Mute = saveValue == 1 ? true : false;
@@ -81,21 +82,21 @@ public class AudioManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        GameManager.onGameStart -= PlayGameMusic;
+        GameManager.onGameStart -= PlayGameMusic; 
         GameManager.onFinish -= PlayFinishSound;
     }
     private void PlayMenuMusic()
     {
         StartCoroutine(MusicChangeProcess(_menuMusic));
     }
-    private void PlayGameMusic()
+    public void PlayGameMusic()
     {
         _startGameSound.Play(); 
         StartCoroutine(MusicChangeProcess(_gameMusic));
     }
     private void PlayFinishSound()
     {
-        StartCoroutine(MusicChangeProcess(_loseSound, 4f));
+        StartCoroutine(MusicChangeProcess(_loseSound));
     }
     public static void PlayOneShot(SoundType soundType)
     {
@@ -113,8 +114,9 @@ public class AudioManager : MonoBehaviour
                 _instance?._swipeSound.Play(); break;
             case SoundType.Click:
                 _instance?._clickSound.Play(); break;
-            case SoundType.StartGame:
-                _instance?._startGameSound.Play(); break;
+            case SoundType.Win:
+                _instance?._gameMusic.Play(); 
+                _instance?._winSound.Play(); break;
         }
     }
     public void PlayClickSound()
@@ -127,7 +129,7 @@ public class AudioManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         music.Play();
     }
-    private void StopAllMusic()
+    public void StopAllMusic()
     {
         _menuMusic.Stop();
         _gameMusic.Stop(); 

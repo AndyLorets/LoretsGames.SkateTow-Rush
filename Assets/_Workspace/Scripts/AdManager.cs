@@ -11,7 +11,7 @@ public static class AdManager
 
 #if UNITY_EDITOR
     public static bool RewardedAvailable = true;
-#else
+#elif UNITY_WEBGL
     public static bool RewardedAvailable => GP_Ads.IsRewardedAvailable(); 
 #endif
     public static void ShowFullScreen()

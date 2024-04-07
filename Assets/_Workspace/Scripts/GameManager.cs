@@ -65,6 +65,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0; 
         AudioListener.pause = true;
 
+        if (_instance == null) return;
+
         _instance._pauseBG.enabled = true;
         _instance._pauseTween.Show();
         _instance._pauseBtnTween.Hide(); 
@@ -73,6 +75,8 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         AudioListener.pause = false;
+
+        if (_instance == null) return;
 
         _instance._pauseBG.enabled = false;
         _instance._pauseTween.Hide();
@@ -152,13 +156,13 @@ public class GameManager : MonoBehaviour
     }
     public void Restart()
     {
+        AdManager.ShowFullScreen();
+
         onRestart?.Invoke();
         SaveAll();
 
         if (DEBBUG_LOG)
             Debug.Log($"<color=#00FFFF>Game is Restarted.</color>\"");
-
-        AdManager.ShowFullScreen();
     }
     public static void SaveAll()
     {

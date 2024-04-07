@@ -53,6 +53,7 @@ public class SpeedLineUIEffect
         TweenSpeedlinesImage(active);
         TweenSpeedlinesRect(active);
 
+        ServiceLocator.GetService<CameraManager>().PostEffectTweening(); 
     }
     public void Disable()
     {
@@ -61,6 +62,8 @@ public class SpeedLineUIEffect
         active = false; 
         TweenSpeedlinesImage(active);
         TweenSpeedlinesRect(active);
+
+        ServiceLocator.GetService<CameraManager>().PostEffectTweening();
     }
     private void TweenSpeedlinesImage(bool state)
     {

@@ -34,13 +34,14 @@ public class UIGameTimeRenderer : MonoBehaviour
         _uiMoveTween.Show();
         StartCoroutine(Timer());
     }
+    static string ScoreString => TextTranslator.CurrentTextLanguage("Score: ", "Очки: ");
     public static string ScoreText()
     {
         float t = Time.time;
         string minutes = Mathf.Floor(t / 60).ToString("00");
         string seconds = Mathf.Floor(t % 60).ToString("00");
         string milliseconds = Mathf.Floor((t * 100) % 100).ToString("00");
-        string text = "Score: " + minutes + ":" + seconds + ":" + milliseconds;
+        string text = ScoreString + minutes + ":" + seconds + ":" + milliseconds;
         return text;
     }
 }

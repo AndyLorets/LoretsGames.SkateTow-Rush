@@ -21,7 +21,7 @@ public static class GemManager
     }
     public static void Save()
     {
-        GameDataManager.GemCount += currentGemCount;
+        GameDataManager.GemCount += currentGemCount; 
     }
     public static void Reset()
     {

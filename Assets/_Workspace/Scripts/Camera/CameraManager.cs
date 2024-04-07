@@ -34,6 +34,7 @@ public class CameraManager : MonoBehaviour
     }
     private void Awake()
     {
+        ServiceLocator.RegisterService(this); 
         _postEffects = new CameraPostEffect(GetComponent<PostProcessVolume>());   
     }
     private void Start()
@@ -44,10 +45,8 @@ public class CameraManager : MonoBehaviour
 
         ChangeCam(cam_wait_name); 
     }
-    private void PostEffectTweening(bool active)
+    public void PostEffectTweening()
     {
-        if (!active) return; 
-
         _postEffects.VignettEfffectTween();
         _postEffects.BloomEfffectTween();
         _postEffects.ColorGradingEfffectTween(); 

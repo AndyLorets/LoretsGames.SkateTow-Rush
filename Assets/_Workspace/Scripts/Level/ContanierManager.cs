@@ -85,6 +85,9 @@ public class ContanierManager : MonoBehaviour
         _player.RespawnAfterEnd();
         ResetAllContaniers();
         SetPlayerContanierDist();
+
+        if (Time.timeScale < 1.5f)
+            Time.timeScale += .1f; 
     }
     private void ResetAllContaniers()
     {

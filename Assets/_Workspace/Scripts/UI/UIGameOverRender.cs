@@ -37,7 +37,6 @@ public class UIGameOverRender : MonoBehaviour
         _darkPanel.enabled = false; 
 
     }
-    string ScoreString => TextTranslator.CurrentTextLanguage("Score", "Очки"); 
     private void RenderFinishPanel() => StartCoroutine(RenderDaley(true));
     private IEnumerator RenderDaley(bool isFinish)
     {
@@ -54,7 +53,7 @@ public class UIGameOverRender : MonoBehaviour
 
             uIMoveTween = _winButtonsTween;
             _finishPanel.gameObject.SetActive(true);
-            _finishTimeText.text = $"{ScoreString}: {UIGameTimeRenderer.ScoreText()}";
+            _finishTimeText.text = $"{UIGameTimeRenderer.ScoreText()}";
             _finishMoneyText.text = $"{money}";
             _finishKeyText.text = $"{keys}";
         }
